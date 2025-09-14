@@ -11,6 +11,7 @@ body {
   background: #333333;
   padding: .4em;
   border-radius: 6px;
+  margin:6px;
 }
 
 .card-image {
