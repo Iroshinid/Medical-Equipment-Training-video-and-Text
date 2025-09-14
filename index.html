@@ -1,17 +1,208 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Azeret+Mono:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <link href="styles.css" rel="stylesheet"> <!-- Ensure this links to your CSS file -->
-    <title>Text and Video</title>
-  </head>
-  <body>
-    <center>
-      <h1>Text and Video</h1>
-    </center>
-  </body>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dark Mode Website</title>
+  <style>
+    /* Base styles (light mode by default) */
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #ffffff;
+      color: #000000;
+      text-align: center;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    header {
+      padding: 20px;
+      background-color: #f1f1f1;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 2em;
+      background: linear-gradient(45deg, #6a5acd, #1e90ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* Dark mode */
+    body.dark {
+      background-color: #121212;
+      color: #ffffff;
+    }
+
+    body.dark header {
+      background-color: #1f1f1f;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+    }
+
+    /* Toggle switch (top-right corner) */
+    .toggle-wrapper {
+      position: absolute;
+      right: 20px;
+    }
+
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 50px;
+      height: 26px;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      transition: .4s;
+      border-radius: 26px;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 20px;
+      width: 20px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      transition: .4s;
+      border-radius: 50%;
+    }
+
+    input:checked + .slider {
+      background: linear-gradient(45deg, #6a5acd, #1e90ff);
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(24px);
+    }
+
+    /* Button grid */
+    .button-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 20px;
+      padding: 40px;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    .button-card {
+      background-color: #f1f1f1;
+      border-radius: 12px;
+      overflow: hidden;
+      transition: transform 0.2s, box-shadow 0.2s, background 0.3s;
+      cursor: pointer;
+      text-decoration: none;
+      color: black;
+    }
+
+    .button-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px rgba(106, 90, 205, 0.6);
+    }
+
+    .button-card img {
+      width: 100%;
+      height: 120px;
+      object-fit: cover;
+    }
+
+    .button-card p {
+      padding: 15px;
+      margin: 0;
+      font-size: 1.1em;
+      background-color: #eaeaea;
+      transition: background 0.3s;
+    }
+
+    /* Dark mode for cards */
+    body.dark .button-card {
+      background-color: #1f1f1f;
+      color: white;
+    }
+
+    body.dark .button-card p {
+      background-color: #2a2a2a;
+    }
+  </style>
+</head>
+<body class="dark">
+  <header>
+    <h1>My Website</h1>
+    <div class="toggle-wrapper">
+      <label class="switch">
+        <input type="checkbox" id="toggleDark">
+        <span class="slider"></span>
+      </label>
+    </div>
+  </header>
+
+  <div class="button-container">
+    <a href="autoclave.html" class="button-card">
+      <img src="Autoclave.jpg" alt="Button 1">
+      <p>Autoclave</p>
+    </a>
+    <a href="defibrillator.html" class="button-card">
+      <img src="Defibrillator.jpeg" alt="Button 2">
+      <p>Defibrillator</p>
+    </a>
+    <a href="ecg.html" class="button-card">
+      <img src="ECG Machine.wedp" alt="Button 3">
+      <p>ECG Machine</p>
+    </a>
+    <a href="patient_monitor.html" class="button-card">
+      <img src="Patient Monitor.webp" alt="Button 4">
+      <p>Patient Monitor</p>
+    </a>
+    <a href="suction_apparatus.html" class="button-card">
+      <img src="Suction Apparatus.jpeg" alt="Button 5">
+      <p>Suction Apparatus</p>
+    </a>
+    <a href="syringe_pump.html" class="button-card">
+      <img src="Syringe Pump.jpg" alt="Button 6">
+      <p>Syringe Pump</p>
+    </a>
+  </div>
+
+  <script>
+    const toggle = document.getElementById("toggleDark");
+    const body = document.body;
+
+    // Load saved mode
+    if (localStorage.getItem("dark-mode") === "enabled") {
+      body.classList.add("dark");
+      toggle.checked = true;
+    }
+
+    toggle.addEventListener("change", () => {
+      body.classList.toggle("dark");
+
+      if (body.classList.contains("dark")) {
+        localStorage.setItem("dark-mode", "enabled");
+      } else {
+        localStorage.setItem("dark-mode", "disabled");
+      }
+    });
+  </script>
+</body>
 </html>
+
