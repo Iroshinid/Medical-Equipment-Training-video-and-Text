@@ -1,27 +1,41 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Azeret+Mono:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <link href="styles.css" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet"> <!-- Ensure this links to your CSS file -->
     <title>Text and Video</title>
   </head>
   <body>
     <center>
       <h1>Text and Video</h1>
-      <div class="card">
-        <div class="card-image">
-          <img src="images (1).jpeg" alt="image" width="176" height="130>
-        </div>
-        <div class="category"></div>
-      </div>
-      <div class="card">
-        <div class="card-image">
-          <img src="images (2).jpeg" alt="Trulli" width="176" height="130>
-        </div>
-      <div class="category"></div>
-      </div>
     </center>
+
+    <!-- This is the new container for your cards, enabling side-by-side layout with Flexbox -->
+    <div class="card-gallery-container">
+      <div class="card">
+        <div class="card-image">
+          <!-- Fixed the height attribute and removed width/height for CSS control -->
+          <img src="images (1).jpeg" alt="Defibrillator" />
+        </div>
+        <div class="card-content">
+          <div class="category">Medical Device</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-image">
+          <!-- Fixed the height attribute and removed width/height for CSS control -->
+          <img src="images (2).jpeg" alt="Trulli Houses" />
+        </div>
+        <div class="card-content">
+          <div class="category">Architecture</div>
+        </div>
+      </div>
+    </div>
+
   </body>
 </html>
