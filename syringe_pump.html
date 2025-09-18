@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Syringe Pump Text Only</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+      body {
+        background-color: #f5f5ff;
+        color: #1a237e;
+        transition: background 0.4s, color 0.4s;
+        font-family: Arial, sans-serif;
+      }
+      .card {
+        width: 90%;
+        border-radius: 20px;
+        padding: 20px;
+        background: #fff;
+        position: relative;
+        border: 4px solid transparent;
+        background-clip: padding-box;
+        text-align: left;
+      }
+      .card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        padding: 4px;
+        background: linear-gradient(135deg, #42a5f5, #ab47bc);
+        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        z-index: -1;
+      }
+      h1, h4 { text-align: center; }
+      p { text-align: left; padding: 10px; margin: 0; }
+
+      /* Dark mode */
+      body.dark { background-color: #120024; color: #f3e5f5; }
+      body.dark .card { background: #1e1e2f; color: #f3e5f5; }
+      body.dark .card::before { background: linear-gradient(135deg, #5c6bc0, #ba68c8); }
+
+      /* Dark-mode toggle */
+      .switch {
+        position: fixed;
+        top: 15px;
+        right: 20px;
+        width: 60px; height: 34px;
+        z-index: 1000;
+      }
+      .switch input { display: none; }
+      .slider {
+        position: absolute;
+        inset: 0;
+        cursor: pointer;
+        background-color: #90caf9;
+        transition: 0.4s;
+        border-radius: 34px;
+      }
+      .slider:before {
+        content: "";
+        position: absolute;
+        height: 26px; width: 26px;
+        left: 4px; bottom: 4px;
+        background-color: white;
+        transition: 0.4s;
+        border-radius: 50%;
+      }
+      input:checked + .slider { background-color: #ba68c8; }
+      input:checked + .slider:before { transform: translateX(26px); }
+
+      /* Language dropdown wrapper + custom arrow */
+      .language-select-wrapper {
+        position: fixed;
+        top: 15px;
+        left: 20px;
+        z-index: 1000;
+        display: inline-block;
+      }
+      .language-select-wrapper::after {
+        content: "▼";
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        pointer-events: none;
+        color: #ab47bc;
+        font-size: 12px;
+      }
+      body.dark .language-select-wrapper::after { color: #ba68c8; }
+
+      /* Styled language dropdown */
+      .language-select {
+        padding: 8px 56px 8px 12px;
+        font-size: 14px;
+        font-weight: 600;
+        border-radius: 10px;
+        border: 2px solid transparent;
+        background-color: #fff;
+        color: #1a237e;
+        cursor: pointer;
+        outline: none;
+        appearance: none;
+        background-image: linear-gradient(#fff, #fff),
+                          linear-gradient(135deg, #42a5f5, #ab47bc);
+        background-origin: border-box;
+        background-clip: padding-box, border-box;
+      }
+      .language-select:hover {
+        background-image: linear-gradient(#f5f5ff, #f5f5ff),
+                          linear-gradient(135deg, #42a5f5, #ab47bc);
+      }
+      body.dark .language-select {
+        background-image: linear-gradient(#1e1e2f, #1e1e2f),
+                          linear-gradient(135deg, #5c6bc0, #ba68c8);
+        color: #f3e5f5;
+      }
+      body.dark .language-select:hover {
+        background-image: linear-gradient(#2a2a3f, #2a2a3f),
+                          linear-gradient(135deg, #5c6bc0, #ba68c8);
+      }
+
+      .lang { display: none; }
+
+      /* Normalize option colors (light mode) */
+      .language-select option {
+        background-color: #ffffff;
+        color: #1a237e;
+      }
+      .language-select option:hover,
+      .language-select option:checked {
+        background-color: #e8f0ff;
+        color: #1a237e;
+      }
+      body.dark .language-select option {
+        background-color: #1e1e2f;
+        color: #f3e5f5;
+      }
+      body.dark .language-select option:hover,
+      body.dark .language-select option:checked {
+        background-color: #2a2a3f;
+        color: #f3e5f5;
+      }
+      .language-select { color-scheme: light dark; }
+    </style>
+  </head>
+  <body class="dark">
+    <!-- Dark mode toggle -->
+    <label class="switch">
+      <input type="checkbox" id="modeToggle" checked>
+      <span class="slider"></span>
+    </label>
+
+    <!-- Language selector -->
+    <div class="language-select-wrapper">
+      <select id="languageSelect" class="language-select">
+        <option value="English">English</option>
+        <option value="Sinhala">Sinhala</option>
+        <option value="Tamil">Tamil</option>
+      </select>
+    </div>
+
+    <center>
+      <div class="card">
+        <h1>Syringe Pump — Text Module</h1>
+        <h4>Operate</h4>
+<p>
+  <span class="lang English">Power On: Press the power button; confirm self-test passes without errors.</span>
+<span class="lang Sinhala">Power button ඔබා Power on කරන්න; self-test දෝෂ රහිතව සම්පූර්ණවී ඇති බව තහවුරු කරන්න.</span>
+<span class="lang Tamil">Power button அழுத்தி on செய்யவும்; self-test பிழையின்றி முடிந்ததை உறுதிப்படுத்தவும்.</span><br><br>
+  <span class="lang English">Prepare Syringe: Draw up medication per prescription, label syringe with drug name, concentration, date, and time. Remove air bubbles before loading.</span>
+<span class="lang Sinhala">Syringe සූදානම් කිරීම: Prescription අනුව ඖෂධය syringe එකට ඇදගන්න; drug name, concentration, date, time ලේබල මත සඳහන් කරන්න. Load කිරීමට පෙර air bubbles ඉවත් කරන්න.</span>
+<span class="lang Tamil">Syringe தயாரிப்பு: Prescription படி மருந்தை syringe இல் எடுக்கவும்; drug name, concentration, date, time லேபலில் எழுதவும். Load செய்வதற்கு முன் air bubbles ஐ நீக்கவும்.</span><br><br>
+  <span class="lang English">Load Syringe into Pump: Open clamp/loading mechanism. Seat syringe barrel and plunger correctly according to size markings. Secure plunger holder and barrel clamp.</span>
+<span class="lang Sinhala">Syringe Pump වෙත load කිරීම: Clamp/ loading mechanism විවෘත කරන්න. Size markings අනුව syringe barrel සහ plunger නිවැරදිව seat කරන්න. Plunger holder සහ barrel clamp සුරක්ෂිතව තබන්න.</span>
+<span class="lang Tamil">Syringe Pump இல் load செய்வது: Clamp/ loading mechanism ஐ திறக்கவும். Size markings படி syringe barrel மற்றும் plunger ஐ சரியாக seat செய்யவும். Plunger holder மற்றும் barrel clamp ஐ உறுதியாக fix செய்யவும்.</span><br><br>
+  <span class="lang English">Set Infusion Parameters: Program rate (mL/hr or mL/min), total volume, and VTBI if applicable. Double-check against prescription and patient ID.</span>
+<span class="lang Sinhala">Infusion parameters සකස් කිරීම: Rate (mL/hr හෝ mL/min), total volume, සහ අවශ්‍ය නම් VTBI සකස් කරන්න. Prescription හා patient ID යටතේ දෙවරක් පරීක්ෂා කරන්න.</span>
+<span class="lang Tamil">Infusion parameters அமைத்தல்: Rate (mL/hr அல்லது mL/min), total volume, மற்றும் தேவையெனில் VTBI ஐ அமைக்கவும். Prescription மற்றும் patient ID க்கு எதிராக இரண்டு முறை சரிபார்க்கவும்.</span><br><br>
+  <span class="lang English">Prime the Line: Prime manually or via pump function to remove air.</span>
+<span class="lang Sinhala">Line prime කරන්න: Manual හෝ pump function භාවිතා කර air ඉවත් කරන්න.</span>
+<span class="lang Tamil">Line ஐ prime செய்யவும்: Manual அல்லது pump function மூலம் air ஐ நீக்கவும்.</span><br><br>
+  <span class="lang English">Start Infusion: Press start; confirm flow visually and via display.</span>
+<span class="lang Sinhala">Infusion ආරම්භ කරන්න: Start ඔබන්න; display මගින්ද දෘශ්‍යවද flow තහවුරු කරන්න.</span>
+<span class="lang Tamil">Infusion தொடங்கு: Start ஐ அழுத்தவும்; display மற்றும் கண்ணால் flow ஐ உறுதி செய்யவும்.</span><br><br>
+  <span class="lang English">During Infusion: Monitor site for extravasation or infiltration. Check pump regularly for alarms or deviations from set rate.</span>
+<span class="lang Sinhala">Infusion අතර: IV site extravasation/ infiltration සඳහා නිරීක්ෂණය කරන්න. Pump alarms හෝ set rate එකින් වැරදිව යන බව සඳහා නිතර පරීක්ෂා කරන්න.</span>
+<span class="lang Tamil">Infusion நடக்கும் போது: IV site இல் extravasation/ infiltration உள்ளது என்பதை கவனிக்கவும். Pump alarms அல்லது set rate மாற்றங்கள் உள்ளதா என்று அடிக்கடி பார்க்கவும்.</span><br><br>
+  <span class="lang English">End of Infusion: Stop pump, clamp line, disconnect using aseptic technique, and discard syringe/line per policy.</span>
+<span class="lang Sinhala">Infusion අවසානයේ: Pump stop කර line clamp කරන්න; aseptic technique අනුව disconnect කර, policy අනුව syringe/line ඉවත දමන්න.</span>
+<span class="lang Tamil">Infusion முடிவில்: Pump ஐ stop செய்து line ஐ clamp செய்யவும்; aseptic technique படி disconnect செய்து policy படி syringe/line ஐ கைவிடவும்.</span><br><br>
+  <span class="lang English">Extra: Always use syringes compatible with the pump for accurate delivery. Never bypass occlusion alarms — investigate cause before resuming.</span>
+<span class="lang Sinhala">අමතර: නිවැරදි delivery සඳහා pump compatible syringes පමණක් භාවිතා කරන්න. Occlusion alarms කිසිවිටෙක bypass නොකරන්න — නැවත ආරම්භ කිරීමට පෙර හේතුව පරීක්ෂා කරන්න.</span>
+<span class="lang Tamil">கூடுதல்: துல்லியமான delivery க்காக pump compatible syringes மட்டுமே பயன்படுத்தவும். Occlusion alarms ஐ ஒருபோதும் bypass செய்ய வேண்டாம் — மீண்டும் தொடங்குவதற்கு முன் காரணத்தை ஆய்வு செய்யவும்.</span>
+</p>
+<h4>Safety Checks (Daily)</h4>
+<p>
+  <span class="lang English">Before use: Verify correct syringe size/type is selected in pump settings.</span>
+<span class="lang Sinhala">භාවිතයට පෙර: Pump settings තුළ නිවැරදි syringe size/type තේරී ඇතිද තහවුරු කරන්න.</span>
+<span class="lang Tamil">பயன்பாட்டிற்கு முன்: Pump settings இல் சரியான syringe size/type தேர்வு செய்துள்ளீர்களா உறுதி செய்யவும்.</span><br><br>
+  <span class="lang English">Before use: Inspect syringe and tubing for cracks, leaks, or damage.</span>
+<span class="lang Sinhala">භාවිතයට පෙර: Syringe සහ tubing හි කැඳවීම්, කාන්දු වීම, හානිය ඇත්නම් පරීක්ෂා කරන්න.</span>
+<span class="lang Tamil">பயன்பாட்டிற்கு முன்: Syringe மற்றும் tubing இல் பிளவுகள், கசிவு, சேதம் உள்ளதா பாருங்கள்.</span><br><br>
+  <span class="lang English">Before use: Ensure battery charge >80% or connect to AC.</span>
+<span class="lang Sinhala">භාවිතයට පෙර: Battery charge >80% ද, නැත්නම් AC සම්බන්ධ කර තිබේදැයි බලන්න.</span>
+<span class="lang Tamil">பயன்பாட்டிற்கு முன்: Battery charge >80% அல்லது AC இணைக்கப்பட்டுள்ளதா பாருங்கள்.</span><br><br>
+  <span class="lang English">Before use: Confirm settings with a second checker (for high-risk medications).</span>
+<span class="lang Sinhala">භාවිතයට පෙර: (High‑risk medications සඳහා) දෙවන පරීක්ෂකයෙකු සමඟ settings තහවුරු කරන්න.</span>
+<span class="lang Tamil">பயன்பாட்டிற்கு முன்: (High‑risk medications க்கு) இரண்டாம் checker உடன் settings ஐ உறுதி செய்யவும்.</span><br><br>
+  <span class="lang English">During use: Position pump at or below patient heart level when possible.</span>
+<span class="lang Sinhala">භාවිතයේදී: හැකි විට pump රෝගියාගේ හෘද මට්ටමට හෝ එයට වඩා පහළ පදවන්න.</span>
+<span class="lang Tamil">பயன்பாட்டின் போது: இயன்றால் pump ஐ நோயாளியின் இதய மட்டத்தில் அல்லது அதற்குக் கீழே வைக்கவும்.</span><br><br>
+  <span class="lang English">During use: Ensure tubing is not kinked or compressed.</span>
+<span class="lang Sinhala">භාවිතය අතරතුර: නළය ඇඹරී හෝ සම්පීඩනය වී නොමැති බවට වග බලා ගන්න.
+</span>
+<span class="lang Tamil">பயன்பாட்டின் போது: Tubing kink ஆகவோ அழுத்தப்படவோ இல்லாததை உறுதி செய்யவும்.</span><br><br>
+  <span class="lang English">After use: Wipe surfaces with approved disinfectant.</span>
+<span class="lang Sinhala">භාවිතයෙන් පසු: අනුමත disinfectant භාවිතයෙන් මතුපිට පිස දමන්න.</span>
+<span class="lang Tamil">பயன்பாட்டிற்குப் பின்: அங்கீகரிக்கப்பட்ட disinfectant கொண்டு மேற்பரப்புகளைத் துடைக்கவும்.</span><br><br>
+  <span class="lang English">After use: Dispose of syringe and line as per infection control policy.</span>
+<span class="lang Sinhala">භාවිතයෙන් පසු: Infection control policy අනුව syringe සහ line ඉවත දමන්න.</span>
+<span class="lang Tamil">பயன்பாட்டிற்கு பின்: Infection control policy படி syringe மற்றும் line ஐ கைவிடவும்.</span>
+</p>
+<h4>Preventive Maintenance</h4>
+<p>
+  <span class="lang English">Weekly: Visual inspection of clamps, syringe holders, and display.</span>
+<span class="lang Sinhala">සතිපතා: Clamps, syringe holders, display සඳහා දෘශ්‍ය පරීක්ෂාව කරන්න.</span>
+<span class="lang Tamil">வாரந்தோறும்: Clamps, syringe holders, display க்கு visual inspection செய்யவும்.</span><br><br>
+  <span class="lang English">Monthly: Accuracy check using calibrated flow test equipment. Test alarm functions (occlusion, end infusion, low battery).</span>
+<span class="lang Sinhala">මාසිකව: Calibrated flow test equipment භාවිතයෙන් accuracy check කරන්න. Alarm functions (occlusion, end infusion, low battery) පරීක්ෂා කරන්න.</span>
+<span class="lang Tamil">மாதந்தோறும்: Calibrated flow test equipment கொண்டு accuracy check செய்யவும். Alarm functions (occlusion, end infusion, low battery) ஐச் சோதிக்கவும்.</span><br><br>
+  <span class="lang English">Annually (by Biomedical Engineering): Full calibration and performance verification.</span>
+<span class="lang Sinhala">වාර්ෂිකව (Biomedical Engineering විසින්): සම්පූර්ණ calibration හා performance verification සිදු කර ගන්න.</span>
+<span class="lang Tamil">ஆண்டுதோறும் (Biomedical Engineering): முழு calibration மற்றும் performance verification செய்யவும்.</span><br><br>
+  <span class="lang English">Always: Log maintenance and faults immediately.</span>
+<span class="lang Sinhala">සැමවිටම: Maintenance සහ faults වහාම logbook එක ලියා තබන්න.</span>
+<span class="lang Tamil">எப்போதும்: Maintenance மற்றும் faults ஐ உடனடியாக logbook இல் பதிவு செய்யவும்.</span>
+</p>
+<h4>Troubleshoot</h4>
+<p>
+  <span class="lang English">Occlusion alarm → Blocked tubing or kink → release clamp, straighten tubing, check IV site.</span>
+<span class="lang Sinhala">Occlusion alarm → අවහිර වූ නල හෝ  kink → clamp නිදහස් කර නල කෙළින් කරන්න, IV site පරීක්ෂා කරන්න.</span>
+<span class="lang Tamil">Occlusion alarm → Tubing அடைப்பு/ kink → clamp ஐ விடுவித்து tubing ஐ நேராக செய்து IV site ஐப் பார்க்கவும்.</span><br><br>
+  <span class="lang English">Syringe dislodged → Improper seating → reload syringe and confirm secure placement.</span>
+<span class="lang Sinhala">Syringe dislodged → නිසි ලෙස seat නොවීම → syringe නැවත load කර සුරක්ෂිතව තිබේදැයි තහවුරු කරන්න.</span>
+<span class="lang Tamil">Syringe dislodged → சரியாக seat செய்யாதது → syringe ஐ மீண்டும் load செய்து உறுதியாக இருக்கிறதா உறுதி செய்யவும்.</span><br><br>
+  <span class="lang English">Low battery alarm → Battery nearly empty → plug into AC immediately.</span>
+<span class="lang Sinhala">Low battery alarm → Battery අවසාන වීමට ළඟායි → ඉක්මනින් AC power සම්බන්ධ කරන්න.</span>
+<span class="lang Tamil">Low battery alarm → Battery கிட்டத்தட்ட காலியாக உள்ளது → உடனடியாக AC ஐ இணைக்கவும்.</span><br><br>
+  <span class="lang English">Rate accuracy error → Wrong syringe size setting or mechanical wear → correct setting or notify Biomedical Engineering.</span>
+<span class="lang Sinhala">Rate accuracy error → වැරදි syringe size setting හෝ mechanical wear → setting නිවැරදි කර නැත්නම් Biomedical Engineering දැනුම් දෙන්න.</span>
+<span class="lang Tamil">Rate accuracy error → தவறான syringe size setting அல்லது mechanical wear → setting ஐத் திருத்தவும் அல்லது Biomedical Engineering க்கு அறிவிக்கவும்.</span>
+</p>
+<h4>Quick Checklist</h4>
+<p>
+  <span class="lang English">Operate: Power on → Prepare & load syringe → Set parameters → Prime → Start → Monitor → Stop/disconnect.</span>
+<span class="lang Sinhala">Operate: Power on → Syringe සූදානම්/ load → Set parameters → Prime → Start → Monitor → Stop/ disconnect.</span>
+<span class="lang Tamil">Operate: Power on → Syringe தயாரிப்பு/ load → Set parameters → Prime → Start → Monitor → Stop/ disconnect.</span><br><br>
+  <span class="lang English">Safety: Correct syringe selection, alarm response, visual checks.</span>
+<span class="lang Sinhala">Safety: නිවැරදි syringe තේරීම, alarms ට වහා ප්‍රතිචාර, දෘශ්‍ය පරීක්ෂාවන්.</span>
+<span class="lang Tamil">Safety: சரியான syringe தேர்வு, alarms க்கு உடனடி பதில், visual checks.</span><br><br>
+  <span class="lang English">Maintenance: Weekly inspection, monthly accuracy test.</span>
+<span class="lang Sinhala">Maintenance: සතිපතා inspection, මාසික accuracy test.</span>
+<span class="lang Tamil">Maintenance: வாராந்திர inspection, மாதாந்திர accuracy test.</span><br><br>
+  <span class="lang English">Troubleshoot: Fix kinks, reload syringe, plug into AC.</span>
+<span class="lang Sinhala">Troubleshoot: Kink නිවැරදි කිරීම, syringe නැවත load කිරීම, AC සම්බන්ධ කිරීම.</span>
+<span class="lang Tamil">Troubleshoot: Kink சரிசெய்தல், syringe மீண்டும் load செய்தல், AC இணைத்தல்.</span>
+</p>
+
+      </div>
+    </center>
+
+    <script>
+      // Dark mode toggle
+      const toggle = document.getElementById('modeToggle');
+      toggle.addEventListener('change', () => {
+        document.body.classList.toggle('dark', toggle.checked);
+      });
+
+      // Language selector
+      const languageSelect = document.getElementById('languageSelect');
+      const allLangs = () => document.querySelectorAll('.lang');
+      function updateLanguage() {
+        const selected = languageSelect.value;
+        allLangs().forEach(el => {
+          el.style.display = el.classList.contains(selected) ? 'inline' : 'none';
+        });
+      }
+      languageSelect.addEventListener('change', updateLanguage);
+      updateLanguage(); // show English by default
+    </script>
+  </body>
+</html>

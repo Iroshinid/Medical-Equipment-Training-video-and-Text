@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Autoclave Text Only</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+      body {
+        background-color: #f5f5ff;
+        color: #1a237e;
+        transition: background 0.4s, color 0.4s;
+        font-family: Arial, sans-serif;
+      }
+      .card {
+        width: 90%;
+        border-radius: 20px;
+        padding: 20px;
+        background: #fff;
+        position: relative;
+        border: 4px solid transparent;
+        background-clip: padding-box;
+        text-align: left;
+      }
+      .card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        padding: 4px;
+        background: linear-gradient(135deg, #42a5f5, #ab47bc);
+        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        z-index: -1;
+      }
+      h1, h4 { text-align: center; }
+      p { text-align: left; padding: 10px; margin: 0; }
+
+      /* Dark mode */
+      body.dark { background-color: #120024; color: #f3e5f5; }
+      body.dark .card { background: #1e1e2f; color: #f3e5f5; }
+      body.dark .card::before { background: linear-gradient(135deg, #5c6bc0, #ba68c8); }
+
+      /* Dark-mode toggle */
+      .switch {
+        position: fixed;
+        top: 15px;
+        right: 20px;
+        width: 60px; height: 34px;
+        z-index: 1000;
+      }
+      .switch input { display: none; }
+      .slider {
+        position: absolute;
+        inset: 0;
+        cursor: pointer;
+        background-color: #90caf9;
+        transition: 0.4s;
+        border-radius: 34px;
+      }
+      .slider:before {
+        content: "";
+        position: absolute;
+        height: 26px; width: 26px;
+        left: 4px; bottom: 4px;
+        background-color: white;
+        transition: 0.4s;
+        border-radius: 50%;
+      }
+      input:checked + .slider { background-color: #ba68c8; }
+      input:checked + .slider:before { transform: translateX(26px); }
+
+      /* Language dropdown wrapper + custom arrow */
+      .language-select-wrapper {
+        position: fixed;
+        top: 15px;
+        left: 20px;
+        z-index: 1000;
+        display: inline-block;
+      }
+      .language-select-wrapper::after {
+        content: "▼";
+        position: absolute;
+        right: 10px;               /* arrow spacing */
+        top: 50%;
+        transform: translateY(-50%);
+        pointer-events: none;
+        color: #ab47bc;
+        font-size: 12px;
+      }
+      body.dark .language-select-wrapper::after { color: #ba68c8; }
+
+      /* Styled language dropdown */
+      .language-select {
+        padding: 8px 56px 8px 12px; /* extra right padding for arrow */
+        font-size: 14px;
+        font-weight: 600;
+        border-radius: 10px;
+        border: 2px solid transparent;
+        background-color: #fff;
+        color: #1a237e;
+        cursor: pointer;
+        outline: none;
+        appearance: none; /* hide native arrow */
+        background-image: linear-gradient(#fff, #fff),
+                          linear-gradient(135deg, #42a5f5, #ab47bc);
+        background-origin: border-box;
+        background-clip: padding-box, border-box;
+      }
+      .language-select:hover {
+        background-image: linear-gradient(#f5f5ff, #f5f5ff),
+                          linear-gradient(135deg, #42a5f5, #ab47bc);
+      }
+      body.dark .language-select {
+        background-image: linear-gradient(#1e1e2f, #1e1e2f),
+                          linear-gradient(135deg, #5c6bc0, #ba68c8);
+        color: #f3e5f5;
+      }
+      body.dark .language-select:hover {
+        background-image: linear-gradient(#2a2a3f, #2a2a3f),
+                          linear-gradient(135deg, #5c6bc0, #ba68c8);
+      }
+
+      .lang { display: none; }
+      /* Normalize option colors (light mode) */
+.language-select option {
+  background-color: #ffffff;   /* list background */
+  color: #1a237e;              /* text */
+}
+
+/* Hover/selected colors (light) */
+.language-select option:hover,
+.language-select option:checked {
+  background-color: #e8f0ff;   /* soft blue */
+  color: #1a237e;
+}
+
+/* Dark mode list colors */
+body.dark .language-select option {
+  background-color: #1e1e2f;   /* dark panel */
+  color: #f3e5f5;              /* light text */
+}
+
+/* Hover/selected in dark */
+body.dark .language-select option:hover,
+body.dark .language-select option:checked {
+  background-color: #2a2a3f;   /* slightly lighter dark */
+  color: #f3e5f5;
+}
+
+/* Hint to browsers about theming (helps on some platforms) */
+.language-select { color-scheme: light dark; }
+
+    </style>
+  </head>
+  <body class="dark">
+    <!-- Dark mode toggle -->
+    <label class="switch">
+      <input type="checkbox" id="modeToggle" checked>
+      <span class="slider"></span>
+    </label>
+
+    <!-- Language selector -->
+    <div class="language-select-wrapper">
+      <select id="languageSelect" class="language-select">
+        <option value="English">English</option>
+        <option value="Sinhala">Sinhala</option>
+        <option value="Tamil">Tamil</option>
+      </select>
+    </div>
+
+    <center>
+      <div class="card">
+        <h1>Autoclave — Text Module</h1>
+
+        <!-- OPERATE -->
+        <h4>Operate</h4>
+        <p>
+          <span class="lang English">Pre-Loading Preparation: Inspect chamber for cleanliness and absence of debris. Check water reservoir level (if applicable).</span>
+          <span class="lang Sinhala">Pre-Loading සූදානම: Chamber පිරිසිදුද, කඩදාසි/ සුන්බුන් වැනි අපද්‍රව්‍ය නොමැතිද පරීක්ෂා කරන්න. (අදාළ නම්) water reservoir මට්ටම බලන්න.</span>
+          <span class="lang Tamil">Pre-Loading தயாரிப்பு: Chamber சுத்தமாகவும் debris இன்றி உள்ளதா பாருங்கள். (தேவையெனில்) water reservoir அளவைச் சரிபார்க்கவும்.</span><br><br>
+
+          <span class="lang English">Loading Items: Wear heat-resistant gloves and PPE. Arrange packs to allow steam circulation (do not overload). Ensure instruments are clean, dried, and packaged correctly.</span>
+          <span class="lang Sinhala">Loading: Heat-resistant gloves සහ PPE ඇඳින්න. Steam circulation උදව් වන පරිදි packs අතර ඉඩ තිබෙන ලෙස සකස් කරන්න (overload නොකරන්න). Instruments පිරිසිදු, වියළි, සහ නිවැරදිව package කර ඇති බව තහවුරු කරන්න.</span>
+          <span class="lang Tamil">Loading: Heat-resistant gloves மற்றும் PPE அணியவும். Steam circulation க்கு இடமளிப்பதற்கு packs இடைவெளியுடன் அமைக்கவும் (overload செய்ய வேண்டாம்). Instruments சுத்தம், உலர்வு, சரியான packaging உறுதி செய்யவும்.</span><br><br>
+
+          <span class="lang English">Select Cycle: Choose appropriate cycle (e.g., 121 °C for 30 min or 134 °C for 4–5 min) according to items being sterilized. Close and lock the autoclave door securely.</span>
+          <span class="lang Sinhala">Cycle තේරීම: item අනුව සුදුසු cycle තෝරන්න (උදා., 121°C මිනිත්තු 30 හෝ 134°C මිනිත්තු 4–5). Autoclave door වසා securely lock කරන්න.</span>
+          <span class="lang Tamil">Cycle தேர்வு: பொருட்களுக்கு ஏற்ப சரியான cycle ஐத் தேர்ந்தெடுக்கவும் (எ.கா., 121°C 30 நிமிடம் அல்லது 134°C 4–5 நிமிடம்). Autoclave door ஐ நன்றாக மூடி lock செய்யவும்.</span><br><br>
+
+          <span class="lang English">Start Cycle: Press start; monitor cycle parameters on display.</span>
+          <span class="lang Sinhala">Start Cycle: Start ඔබා display මත cycle parameters නිරීක්ෂණය කරන්න.</span>
+          <span class="lang Tamil">Start Cycle: Start ஐ அழுத்தி display இல் cycle parameters ஐ கண்காணிக்கவும்.</span><br><br>
+
+          <span class="lang English">End of Cycle: Wait until pressure returns to zero before opening door slightly to release residual steam. Allow load to cool before handling.</span>
+          <span class="lang Sinhala">Cycle අවසානයේ: Pressure zero වෙලා යන තෙක් බලා සිටින්න; එවිට දොර ටිකක් විවෘත කර ඉතිරි steam නිදහස් කරන්න. Load සෑහෙන පමණ සිසිල්වූ පසු පමණක් හසුරුවන්න.</span>
+          <span class="lang Tamil">Cycle முடிவில்: Pressure zero ஆகும் வரை காத்திருங்கள்; பின்னர் door ஐ சிறிது திறந்து மீதமுள்ள steam ஐ வெளியிடவும். Load குளிர்ந்த பின் மட்டுமே கையாளவும்.</span><br><br>
+
+          <span class="lang English">Extra: Always follow manufacturer’s recommended cycle for specific instruments. Never open the door while the chamber is under pressure.</span>
+          <span class="lang Sinhala">අමතර: විශේෂ උපකරණ සඳහා නිෂ්පාදකයාගේ recommended cycle අනුගමනය කරන්න. Chamber පීඩනය යටතේ සිටින විට දොර කිසිවිටෙකත් විවෘත නොකරන්න.</span>
+          <span class="lang Tamil">கூடுதல்: குறிப்பிட்ட கருவிகளுக்கு உற்பத்தியாளர் பரிந்துரைக்கும் cycle ஐ எப்போதும் பின்பற்றவும். Chamber அழுத்தத்தில் இருக்கும் போது door ஐ ஒருபோதும் திறக்க வேண்டாம்.</span>
+        </p>
+
+        <!-- SAFETY CHECKS -->
+        <h4>Safety Checks (Daily)</h4>
+        <p>
+          <span class="lang English">Before use: Check pressure gauge (should read zero before starting).</span>
+          <span class="lang Sinhala">භාවිතයට පෙර: Pressure gauge පරීක්ෂා කරන්න (ආරම්භ කිරීමට පෙර zero දර්ශනය විය යුතුය).</span>
+          <span class="lang Tamil">பயன்பாட்டிற்கு முன்: Pressure gauge ஐச் சரிபார்க்கவும் (தொடங்கும் முன் zero ஆக இருக்க வேண்டும்).</span><br><br>
+
+          <span class="lang English">Before use: Inspect door gasket for cracks or wear.</span>
+          <span class="lang Sinhala">භාවිතයට පෙර: Door gasket හි කැඩීම් හෝ ගෙවීම් තිබේදැයි බලන්න.</span>
+          <span class="lang Tamil">பயன்பாட்டிற்கு முன்: Door gasket இல் பிளவுகள் அல்லது kulippu உள்ளதா பாருங்கள்.</span><br><br>
+
+          <span class="lang English">Before use: Ensure safety valves are unobstructed.</span>
+          <span class="lang Sinhala">භාවිතයට පෙර: Safety valves අවහිරවී නොමැති බව තහවුරු කරන්න.</span>
+          <span class="lang Tamil">பயன்பாட்டிற்கு முன்: Safety valves தடையின்றி உள்ளதா உறுதி செய்யவும்.</span><br><br>
+
+          <span class="lang English">During use: Keep hands and face away from steam release.</span>
+          <span class="lang Sinhala">භාවිතයේදී: Steam release තැනට අත් සහ මුව නැගෙනව නොතබන්න.</span>
+          <span class="lang Tamil">பயன்பாட்டின் போது: Steam release இடத்திலிருந்து கைகளையும் முகத்தையும் விலக்கி வைத்திருங்கள்.</span><br><br>
+
+          <span class="lang English">During use: Do not bypass safety interlocks.</span>
+          <span class="lang Sinhala">භාවිතයේදී: Safety interlocks bypass නොකරන්න.</span>
+          <span class="lang Tamil">பயன்பாட்டின் போது: Safety interlocks ஐ bypass செய்ய வேண்டாம்.</span><br><br>
+
+          <span class="lang English">After use: Drain and dry chamber if not used again soon.</span>
+          <span class="lang Sinhala">භාවිතයෙන් පසු: ඉක්මනින් භාවිතා නොකලහොත් chamber හි ජලය බස යාමට සලස්වන්න, වියළි කර තබන්න.</span>
+          <span class="lang Tamil">பயன்பாட்டிற்கு பின்: உடனடி பயன்பாடு இல்லையெனில் chamber ஐ drain செய்து உலர்த்தி வைக்கவும்.</span><br><br>
+
+          <span class="lang English">After use: Record sterilization load in the logbook (cycle parameters, operator name, date).</span>
+          <span class="lang Sinhala">භාවිතයෙන් පසු: Sterilization load logbook එකේ ලියා තබන්න (cycle parameters, operator name, date).</span>
+          <span class="lang Tamil">பயன்பாட்டிற்கு பின்: Sterilization load ஐ logbook இல் பதிவு செய்யவும் (cycle parameters, operator name, date).</span>
+        </p>
+
+        <!-- PREVENTIVE MAINTENANCE -->
+        <h4>Preventive Maintenance</h4>
+        <p>
+          <span class="lang English">Daily: Clean chamber and trays. Check water reservoir and refill with distilled water if needed.</span>
+          <span class="lang Sinhala">දිනපතා: Chamber සහ trays පිරිසිදු කරන්න. Water reservoir පරීක්ෂා කර අවශ්‍ය නම් distilled water පුරවන්න.</span>
+          <span class="lang Tamil">தினசரி: Chamber மற்றும் trays ஐ சுத்தம் செய்யவும். Water reservoir ஐச் சரிபார்த்து தேவையெனில் distilled water நிரப்பவும்.</span><br><br>
+
+          <span class="lang English">Weekly: Inspect door seal and clean filters (if applicable).</span>
+          <span class="lang Sinhala">සතිපතා: Door seal පරීක්ෂා කර filters (අදාළ නම්) පිරිසිදු කරන්න.</span>
+          <span class="lang Tamil">வாராந்திரம்: Door seal ஐ பரிசோதித்து filters (தேவையெனில்) ஐ சுத்தம் செய்யவும்.</span><br><br>
+
+          <span class="lang English">Monthly: Run biological indicator test to confirm sterilization effectiveness.</span>
+          <span class="lang Sinhala">මාසිකව: Sterilization සාර්ථකත්වය තහවුරු කිරීමට biological indicator test ධාවනය කරන්න.</span>
+          <span class="lang Tamil">மாதந்தோறும்: Sterilization பயன்மிக்கதைக் உறுதி செய்ய biological indicator test செய்யவும்.</span><br><br>
+
+          <span class="lang English">Annually (by Biomedical Engineering): Full safety inspection, calibration of temperature/pressure sensors, and replacement of worn parts.</span>
+          <span class="lang Sinhala">වාර්ෂිකව (Biomedical Engineering විසින්): සම්පූර්ණ safety inspection, temperature/pressure sensors calibration, හා ගෙවූ parts මාරු කිරීම සිදු කර ගන්න.</span>
+          <span class="lang Tamil">ஆண்டுதோறும் (Biomedical Engineering): முழு safety inspection, temperature/pressure sensors calibration, மற்றும் kulippu ஆன parts மாற்றுதல்.</span>
+        </p>
+
+        <!-- TROUBLESHOOT -->
+        <h4>Troubleshoot</h4>
+        <p>
+          <span class="lang English">Cycle incomplete → Power failure or low water → restore power, refill reservoir, restart cycle.</span>
+          <span class="lang Sinhala">Cycle අසම්පූර්ණ → Power failure හෝ low water → power නැවත ලබා දී reservoir පුරවා cycle නැවත ආරම්භ කරන්න.</span>
+          <span class="lang Tamil">Cycle முழுமையில்லை → Power failure அல்லது low water → power ஐ மீட்டெடுத்து reservoir நிரப்பி cycle ஐ மீண்டும் தொடங்கவும்.</span><br><br>
+
+          <span class="lang English">Failure to build pressure → Door not sealed or gasket damaged → reseal door, replace gasket.</span>
+          <span class="lang Sinhala">Pressure නැංවීමට අසමත් → Door හොඳින් seal නොවීම හෝ gasket කැඩී තිබීම → door නැවත seal කර gasket මාරු කරන්න.</span>
+          <span class="lang Tamil">Pressure உயரவில்லை → Door seal சரியில்லை அல்லது gasket சேதமடைந்தது → door ஐ மீண்டும் seal செய்து gasket ஐ மாற்றவும்.</span><br><br>
+
+          <span class="lang English">Wet load after cycle → Overloading or insufficient drying phase → reduce load size, run drying cycle.</span>
+          <span class="lang Sinhala">Cycle නතර වීමෙන් පසු wet load → Overloading හෝ drying phase ප්‍රමාණවත් නොවීම → load අඩු කර drying cycle ධාවනය කරන්න.</span>
+          <span class="lang Tamil">Cycle க்கு பின் load ஈரமாக உள்ளது → Overloading அல்லது drying phase போதாமை → load அளவை குறைத்து drying cycle ஐ இயக்கவும்.</span><br><br>
+
+          <span class="lang English">Frequent steam leaks → Gasket wear → inspect and replace.</span>
+          <span class="lang Sinhala">නිතර steam leaks → Gasket ගෙවීම් → පරීක්ෂා කර මාරු කරන්න.</span>
+          <span class="lang Tamil">அடிக்கடி steam leaks → Gasket kulippu → பரிசோதித்து மாற்றவும்.</span>
+        </p>
+
+        <!-- QUICK CHECKLIST -->
+        <h4>Quick Checklist</h4>
+        <p>
+          <span class="lang English">Operate: Clean chamber → Load correctly → Select cycle → Start → Wait for zero pressure → Cool load.</span>
+          <span class="lang Sinhala">Operate: Chamber පිරිසිදු → නිවැරදිව load → Cycle තෝරන්න → Start → Pressure zero දක්වා බලා සිටින්න → Load සිසිල් කරන්න.</span>
+          <span class="lang Tamil">Operate: Chamber clean → சரியாக load → Cycle தேர்வு → Start → Zero pressure வரை காத்திரு → Load குளிர்.</span><br><br>
+
+          <span class="lang English">Safety: Wear PPE, check gauges, avoid steam exposure.</span>
+          <span class="lang Sinhala">Safety: PPE ඇඳින්න, gauges පරීක්ෂා කරන්න, වාෂ්පයට නිරාවරණය වීමෙන් වලකින්න.</span>
+          <span class="lang Tamil">Safety: PPE அணியவும், gauges ஐச் சரிபார்க்கவும், steam க்கு நேரடி வெளிப்பாடு தவிர்க்கவும்.</span><br><br>
+
+          <span class="lang English">Maintenance: Daily clean, weekly inspection, monthly biological test, annual calibration.</span>
+          <span class="lang Sinhala">Maintenance: දෛනික පිරිසිදු, සතිපතා පරීක්ෂාව, මාසික biological test, වාර්ෂික calibration.</span>
+          <span class="lang Tamil">Maintenance: தினசரி சுத்தம், வாராந்திர பரிசோதனை, மாதாந்திர biological test, ஆண்டு calibration.</span><br><br>
+
+          <span class="lang English">Troubleshoot: Check power/water, seal door, adjust load size, replace gasket.</span>
+          <span class="lang Sinhala">Troubleshoot: Power/water පරීක්ෂා කරන්න, door seal කරන්න, load size සීරු මරු කරන්න, gasket මාරු කරන්න.</span>
+          <span class="lang Tamil">Troubleshoot: Power/water ஐச் சரிபார், door ஐ seal செய், load size ஐச் சரிசெய், gasket ஐ மாற்று.</span>
+        </p>
+      </div>
+    </center>
+
+    <script>
+      // Dark mode toggle
+      const toggle = document.getElementById('modeToggle');
+      toggle.addEventListener('change', () => {
+        document.body.classList.toggle('dark', toggle.checked);
+      });
+
+      // Language selector
+      const languageSelect = document.getElementById('languageSelect');
+      const allLangs = document.querySelectorAll('.lang');
+      function updateLanguage() {
+        const selected = languageSelect.value;
+        allLangs.forEach(el => {
+          el.style.display = el.classList.contains(selected) ? 'inline' : 'none';
+        });
+      }
+      languageSelect.addEventListener('change', updateLanguage);
+      updateLanguage(); // default shows English (first option)
+    </script>
+  </body>
+</html>

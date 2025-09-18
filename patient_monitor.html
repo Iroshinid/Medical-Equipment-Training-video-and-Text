@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Bedside Patient Monitor Text Only</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+      body {
+        background-color: #f5f5ff;
+        color: #1a237e;
+        transition: background 0.4s, color 0.4s;
+        font-family: Arial, sans-serif;
+      }
+      .card {
+        width: 90%;
+        border-radius: 20px;
+        padding: 20px;
+        background: #fff;
+        position: relative;
+        border: 4px solid transparent;
+        background-clip: padding-box;
+        text-align: left;
+      }
+      .card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        padding: 4px;
+        background: linear-gradient(135deg, #42a5f5, #ab47bc);
+        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        z-index: -1;
+      }
+      h1, h4 { text-align: center; }
+      p { text-align: left; padding: 10px; margin: 0; }
+
+      /* Dark mode */
+      body.dark { background-color: #120024; color: #f3e5f5; }
+      body.dark .card { background: #1e1e2f; color: #f3e5f5; }
+      body.dark .card::before { background: linear-gradient(135deg, #5c6bc0, #ba68c8); }
+
+      /* Dark-mode toggle */
+      .switch {
+        position: fixed;
+        top: 15px;
+        right: 20px;
+        width: 60px; height: 34px;
+        z-index: 1000;
+      }
+      .switch input { display: none; }
+      .slider {
+        position: absolute;
+        inset: 0;
+        cursor: pointer;
+        background-color: #90caf9;
+        transition: 0.4s;
+        border-radius: 34px;
+      }
+      .slider:before {
+        content: "";
+        position: absolute;
+        height: 26px; width: 26px;
+        left: 4px; bottom: 4px;
+        background-color: white;
+        transition: 0.4s;
+        border-radius: 50%;
+      }
+      input:checked + .slider { background-color: #ba68c8; }
+      input:checked + .slider:before { transform: translateX(26px); }
+
+      /* Language dropdown wrapper + custom arrow */
+      .language-select-wrapper {
+        position: fixed;
+        top: 15px;
+        left: 20px;
+        z-index: 1000;
+        display: inline-block;
+      }
+      .language-select-wrapper::after {
+        content: "▼";
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        pointer-events: none;
+        color: #ab47bc;
+        font-size: 12px;
+      }
+      body.dark .language-select-wrapper::after { color: #ba68c8; }
+
+      /* Styled language dropdown */
+      .language-select {
+        padding: 8px 56px 8px 12px;
+        font-size: 14px;
+        font-weight: 600;
+        border-radius: 10px;
+        border: 2px solid transparent;
+        background-color: #fff;
+        color: #1a237e;
+        cursor: pointer;
+        outline: none;
+        appearance: none;
+        background-image: linear-gradient(#fff, #fff),
+                          linear-gradient(135deg, #42a5f5, #ab47bc);
+        background-origin: border-box;
+        background-clip: padding-box, border-box;
+      }
+      .language-select:hover {
+        background-image: linear-gradient(#f5f5ff, #f5f5ff),
+                          linear-gradient(135deg, #42a5f5, #ab47bc);
+      }
+      body.dark .language-select {
+        background-image: linear-gradient(#1e1e2f, #1e1e2f),
+                          linear-gradient(135deg, #5c6bc0, #ba68c8);
+        color: #f3e5f5;
+      }
+      body.dark .language-select:hover {
+        background-image: linear-gradient(#2a2a3f, #2a2a3f),
+                          linear-gradient(135deg, #5c6bc0, #ba68c8);
+      }
+
+      .lang { display: none; }
+
+      /* Normalize option colors (light mode) */
+      .language-select option {
+        background-color: #ffffff;
+        color: #1a237e;
+      }
+      .language-select option:hover,
+      .language-select option:checked {
+        background-color: #e8f0ff;
+        color: #1a237e;
+      }
+      body.dark .language-select option {
+        background-color: #1e1e2f;
+        color: #f3e5f5;
+      }
+      body.dark .language-select option:hover,
+      body.dark .language-select option:checked {
+        background-color: #2a2a3f;
+        color: #f3e5f5;
+      }
+      .language-select { color-scheme: light dark; }
+    </style>
+  </head>
+  <body class="dark">
+    <!-- Dark mode toggle -->
+    <label class="switch">
+      <input type="checkbox" id="modeToggle" checked>
+      <span class="slider"></span>
+    </label>
+
+    <!-- Language selector -->
+    <div class="language-select-wrapper">
+      <select id="languageSelect" class="language-select">
+        <option value="English">English</option>
+        <option value="Sinhala">Sinhala</option>
+        <option value="Tamil">Tamil</option>
+      </select>
+    </div>
+
+    <center>
+      <div class="card">
+        <h1>Bedside Patient Monitor — Text Module</h1>
+        <h4>Operate</h4>
+<p>
+  <span class="lang English">Power On: Press power button; allow self-test to complete. Verify display and waveforms appear normal.</span>
+<span class="lang Sinhala">Power button ඔබා Power on කරන්න; self-test සම්පූර්ණ වනතුරු බලා සිටින්න. Display සහ waveforms සාමාන්‍ය ලෙස පෙන්වෙනවාද තහවුරු කරන්න.</span>
+<span class="lang Tamil">Power button அழுத்தி on செய்யவும்; self-test முடிவடைய அனுமதிக்கவும். Display மற்றும் waveforms வழக்கமாகத் தோன்றுகிறதா உறுதிப்படுத்தவும்.</span><br><br>
+  <span class="lang English">Patient Identification: Enter or confirm patient ID, age, sex in monitor settings.</span>
+<span class="lang Sinhala">Patient Identification: Monitor settings තුළ patient ID, වයස, sex ඇතුල් කරන්න හෝ තහවුරු කරන්න.</span>
+<span class="lang Tamil">Patient Identification: Monitor settings இல் patient ID, வயது, sex ஐ உள்ளிடவோ அல்லது உறுதிப்படுத்தவோ செய்யவும்.</span><br><br>
+  <span class="lang English">ECG: Ensure skin is clean and dry; place electrodes correctly.</span>
+<span class="lang Sinhala">ECG: සම පිරිසිදු සහ වියලි බව තහවුරු කර electrodes නිවැරදිව තබන්න.</span>
+<span class="lang Tamil">ECG: தோல் சுத்தமாகவும் வறண்டதாகவும் இருப்பதை உறுதி செய்து electrodes ஐ சரியாக வைக்கவும்.</span><br><br>
+  <span class="lang English">SpO₂: Place sensor on a warm, clean digit or site; avoid nail polish.</span>
+<span class="lang Sinhala">SpO₂: උණුසුම ඇති, පිරිසිදු ඇඟිල්ලක්/ස්ථානයක් මත sensor තබන්න; නේල් පොලීෂ් වලක්වන්න.</span>
+<span class="lang Tamil">SpO₂: சூடான, சுத்தமான விரலில்/இடத்தில் sensor ஐ வைக்கவும்; nail polish ஐ தவிர்க்கவும்.</span><br><br>
+  <span class="lang English">NIBP: Select correct cuff size; wrap snugly at heart level.</span>
+<span class="lang Sinhala">NIBP: නිවැරදි කෆ් ප්‍රමාණය තෝරන්න; හෘද මට්ටමින් හොඳින් ඔතා ගන්න.</span>
+<span class="lang Tamil">NIBP: சரியான cuff size ஐத் தேர்ந்தெடுக்கவும்; இதய மட்டத்தில் இறுக்கமாக சுற்றி பொருத்தவும்.</span><br><br>
+  <span class="lang English">Temp probe: Use disposable covers; place in recommended site.</span>
+<span class="lang Sinhala">Temp probe: Disposable covers භාවිතා කර නිර්දේශිත ස්ථානයේ තබන්න.</span>
+<span class="lang Tamil">Temp probe: Disposable covers பயன்படுத்தி பரிந்துரைக்கப்பட்ட இடத்தில் வைக்கவும்.</span><br><br>
+  <span class="lang English">Verify Signal Quality: Check waveform stability; adjust electrodes/sensors as needed.</span>
+<span class="lang Sinhala">Signal Quality තහවුරු කරන්න: waveform ස්ථාවරද බලන්න; අවශ්‍ය නම් electrodes/sensors සකස් කරන්න.</span>
+<span class="lang Tamil">Signal Quality ஐ உறுதிப்படுத்தவும்: waveform நிலையாக உள்ளதா பார்க்கவும்; தேவைப்பட்டால் electrodes/sensors ஐச் சரிசெய்யவும்.</span><br><br>
+  <span class="lang English">Set Alarm Limits: Program according to patient condition; enable audible alarms.</span>
+<span class="lang Sinhala">Alarm limits රෝගියාගේ තත්ත්වයට අනුව සකසන්න; audible alarms සක්‍රිය කරන්න.</span>
+<span class="lang Tamil">Alarm limits ஐ நோயாளியின் நிலைக்கு ஏற்ப அமைத்து audible alarms ஐ இயக்கவும்.</span><br><br>
+  <span class="lang English">Monitor Continuously: Observe trends; respond to alarms immediately.</span>
+<span class="lang Sinhala">නිරන්තරව monitor කරන්න: trends නිරීක්ෂණය කර alarms සඳහා ඉක්මනින් ප්‍රතිචාර දිය යුතුය.</span>
+<span class="lang Tamil">தொடர்ச்சியாக monitor செய்யவும்: trends ஐ கவனித்து alarms க்கு உடனடியாக பதிலளிக்கவும்.</span><br><br>
+  <span class="lang English">End of Use: Disconnect sensors; clean reusable components; power down if not in use.</span>
+<span class="lang Sinhala">භාවිතය අවසානයේ sensors විසන්ධි කර නැවත භාවිතා කළ හැකි කොටස් පිරිසිදු කරන්න; භාවිතයට නැතිනම් power down කරන්න.</span>
+<span class="lang Tamil">பயன்பாடு முடிந்ததும் sensors ஐ துண்டித்து மீள்பயன்பாட்டு கூறுகளை சுத்தம் செய்யவும்; பயன்படுத்தாவிட்டால் power down செய்யவும்.</span><br><br>
+  <span class="lang English">Extra: Confirm leads are intact and firmly plugged. Select appropriate mode (adult, pediatric, neonatal).</span>
+<span class="lang Sinhala">අමතර: Leads සම්පූර්ණද සහ හොඳින් plug කර ඇතිද තහවුරු කරන්න. සුදුසු mode (adult, pediatric, neonatal) තෝරන්න.</span>
+<span class="lang Tamil">கூடுதல்: Leads முழுமையாகவும் உறுதியாக plug செய்யப்பட்டுள்ளதா உறுதி செய்யவும். பொருத்தமான mode (adult, pediatric, neonatal) ஐத் தேர்வு செய்யவும்.</span>
+</p>
+<h4>Safety Checks (Daily)</h4>
+<p>
+  <span class="lang English">Before use: Inspect all cables and sensors for wear or damage.</span>
+<span class="lang Sinhala">භාවිතයට පෙර: සියලු cables සහ sensors පරිහරණය/හානිය සඳහා පරීක්ෂා කරන්න.</span>
+<span class="lang Tamil">பயன்பாட்டிற்கு முன்: அனைத்து cables மற்றும் sensors இல் kulippu/சேதம் உள்ளதா பார்க்கவும்.</span><br><br>
+  <span class="lang English">Before use: Ensure battery level >80% if running without mains power.</span>
+<span class="lang Sinhala">භාවිතයට පෙර: mains power නොමැතිනම් battery level >80% ද යන්න තහවුරු කරන්න.</span>
+<span class="lang Tamil">பயன்பாட்டிற்கு முன்: mains power இன்றி ஓட்டினால் battery level >80% என்பதை உறுதிப்படுத்தவும்.</span><br><br>
+  <span class="lang English">Before use: Confirm correct patient category mode is selected.</span>
+<span class="lang Sinhala">භාවිතයට පෙර: නිවැරදි patient category mode තෝරා ඇතිද තහවුරු කරන්න.</span>
+<span class="lang Tamil">பயன்பாட்டிற்கு முன்: சரியான patient category mode தேர்ந்தெடுக்கப்பட்டுள்ளதா உறுதி செய்யவும்.</span><br><br>
+  <span class="lang English">During use: Do not silence alarms without assessing patient.</span>
+<span class="lang Sinhala">භාවිතය අතරතුර: රෝගියා තක්සේරු නොකර alarm නිශ්ශබ්ද නොකරන්න.</span>
+<span class="lang Tamil">பயன்பாட்டின் போது: நோயாளியை மதிப்பாய்வு செய்யாமல் alarms ஐ silence செய்ய வேண்டாம்.</span><br><br>
+  <span class="lang English">During use: Keep cables untangled to avoid pulling sensors off.</span>
+<span class="lang Sinhala">භාවිතයේදී: sensors ඉවත් වීම වැළැක්වීමට cables ගැටෙන සේ නොතබන්න.</span>
+<span class="lang Tamil">பயன்பாட்டின் போது: sensors நீங்காமல் இருக்க cables சிக்காமல் வைத்திருக்கவும்.</span><br><br>
+  <span class="lang English">After use: Disinfect ECG cables, SpO₂ sensors, and cuffs as per policy.</span>
+<span class="lang Sinhala">භාවිතයෙන් පසු: ECG cables, SpO₂ sensors සහ cuffs disinfect කරන්න.</span>
+<span class="lang Tamil">பயன்பாட்டிற்கு பின்: policy படி ECG cables, SpO₂ sensors மற்றும் cuffs ஐ disinfect செய்யவும்.</span><br><br>
+  <span class="lang English">After use: Store monitor safely to prevent falls.</span>
+<span class="lang Sinhala">භාවිතයෙන් පසු: වැටීම් නොවීමට​ monitor එක ආරක්ෂිතව ගබඩා කරන්න.</span>
+<span class="lang Tamil">பயன்பாட்டிற்கு பின்: விழுதலைத் தவிர்க்க monitor ஐ பாதுகாப்பாக சேமிக்கவும்.</span>
+</p>
+<h4>Preventive Maintenance</h4>
+<p>
+  <span class="lang English">Weekly: Visual check of casing, display, and connectors.</span>
+<span class="lang Sinhala">සතිපතා: casing, display සහ connectors සඳහා දෘශ්‍ය පරීක්ෂාව කරන්න.</span>
+<span class="lang Tamil">வாரந்தோறும்: casing, display மற்றும் connectors க்கு visual check செய்யவும்.</span><br><br>
+  <span class="lang English">Annually (by Biomedical Engineering): Full calibration (ECG, SpO₂, NIBP, temp).</span>
+<span class="lang Sinhala">වාර්ෂිකව (Biomedical Engineering විසින්): සම්පූර්ණ calibration (ECG, SpO₂, NIBP, temp).</span>
+<span class="lang Tamil">ஆண்டு தோறும் (Biomedical Engineering): முழு calibration (ECG, SpO₂, NIBP, temp).</span><br><br>
+  <span class="lang English">Always: Record maintenance in the device logbook.</span>
+<span class="lang Sinhala">සැමවිටම: maintenance device logbook එකේ ලියා තබන්න.</span>
+<span class="lang Tamil">எப்போதும்: maintenance ஐ device logbook இல் பதிவு செய்யவும்.</span>
+</p>
+<h4>Troubleshoot</h4>
+<p>
+  <span class="lang English">Leads off → ECG electrode detached → reapply or replace electrode.</span>
+<span class="lang Sinhala">Leads off → ECG electrode විසන්ධි වී ඇත්නම් → electrode නැවත අලවන්න හෝ නව එකක් යොදන්න.</span>
+<span class="lang Tamil">Leads off → ECG electrode விடுபட்டால் → electrode ஐ மீண்டும் பொருத்தவும் அல்லது மாற்றவும்.</span><br><br>
+  <span class="lang English">SpO₂ reading erratic → Poor perfusion or sensor misplacement → warm site, reposition sensor.</span>
+<span class="lang Sinhala">SpO₂ reading අස්ථාවර → perfusion අඩු වීමක් හෝ sensor වැරදි ස්ථානයක් → ස්ථානය උණුසුම් කර sensor නැවත තබන්න.</span>
+<span class="lang Tamil">SpO₂ வாசிப்பு சீரற்றது → perfusion குறைவு அல்லது sensor தவறான இடம் → இடத்தை சூடாக்கி sensor ஐ மறுபதினிடு செய்யவும்.</span><br><br>
+  <span class="lang English">NIBP fails to measure → Cuff too loose/tight or movement → refit cuff, repeat measurement.</span>
+<span class="lang Sinhala">NIBP මැනීමට අසමත් → කෆ් එක ඕනෑවට වඩා ලිහිල්/තදින් හෝ චලනය වී ඇත → කෆ් එක නැවත සවි කරන්න, නැවත මැනීම.</span>
+<span class="lang Tamil">NIBP அளவிட முடியவில்லை → cuff தளர்வு/அதிக இறுக்கம் அல்லது இயக்கம் → cuff ஐ சரியாக மீண்டும் பொருத்தி அளவிடலை மீண்டும் செய்யவும்.</span><br><br>
+  <span class="lang English">No display → Power or battery fault → connect to AC or replace battery; call Biomedical Engineering if persistent.</span>
+<span class="lang Sinhala">Display නැත → power හෝ battery දෝෂ → AC විදුලි සැපයුමට සම්බන්ධ කරන්න හෝ battery මාරු කරන්න; දිගටම පවතිනවා නම් Biomedical Engineering යොමු කරන්න.</span>
+<span class="lang Tamil">Display இல்லை → power அல்லது battery கோளாறு → AC ஐ இணைக்கவும் அல்லது battery ஐ மாற்றவும்; நீடித்தால் Biomedical Engineering ஐ அணுகவும்.</span>
+</p>
+<h4>Quick Checklist</h4>
+<p>
+  <span class="lang English">Operate: Power on → Identify patient → Attach leads → Verify signals → Set alarms → Monitor → End/clean.</span>
+<span class="lang Sinhala">Operate: Power on → Patient හැඳුනුම් තහවුරු → Leads සවි → Signals තහවුරු → Alarms සැකසීම → Monitor → අවසානය/පිරිසිදු කිරීම.</span>
+<span class="lang Tamil">Operate: Power on → Patient அடையாளத்தை உறுதி → Leads பொருத்தல் → Signals சரிபார்ப்பு → Alarms அமைத்தல் → Monitor → முடிவு/சுத்தம்.</span><br><br>
+  <span class="lang English">Safety: Check cables, set correct patient mode, respond to alarms.</span>
+<span class="lang Sinhala">Safety: Cables පරීක්ෂා කර නිවැරදි patient mode සකස් කර alarms වල​ට ප්‍රතිචාර දෙන්න.</span>
+<span class="lang Tamil">Safety: Cables ஐச் சரிபார்த்து சரியான patient mode ஐ அமைத்து alarms க்கு பதிலளிக்கவும்.</span><br><br>
+  <span class="lang English">Maintenance: Weekly visual check, monthly accuracy test, annual calibration.</span>
+<span class="lang Sinhala">Maintenance: සතිපතා visual check, මාසික accuracy test, වාර්ෂික calibration.</span>
+<span class="lang Tamil">Maintenance: வாராந்திர visual check, மாதாந்திர accuracy test, ஆண்டு calibration.</span><br><br>
+  <span class="lang English">Troubleshoot: Reattach leads, warm extremities, refit cuff, check power.</span>
+<span class="lang Sinhala">Troubleshoot: Leads නැවත සවි කරන්න, අවසාන කොටස් උණුසුම් කරන්න, cuff නැවත තබන්න, power පරීක්ෂා කරන්න.</span>
+<span class="lang Tamil">Troubleshoot: Leads ஐ மீண்டும் பொருத்தவும், கை/கால் பகுதியை சூடாக்கவும், cuff ஐ மீண்டும் பொருத்தவும், power ஐச் சரிபார்க்கவும்.</span>
+</p>
+
+      </div>
+    </center>
+
+    <script>
+      // Dark mode toggle
+      const toggle = document.getElementById('modeToggle');
+      toggle.addEventListener('change', () => {
+        document.body.classList.toggle('dark', toggle.checked);
+      });
+
+      // Language selector
+      const languageSelect = document.getElementById('languageSelect');
+      const allLangs = () => document.querySelectorAll('.lang');
+      function updateLanguage() {
+        const selected = languageSelect.value;
+        allLangs().forEach(el => {
+          el.style.display = el.classList.contains(selected) ? 'inline' : 'none';
+        });
+      }
+      languageSelect.addEventListener('change', updateLanguage);
+      updateLanguage(); // show English by default
+    </script>
+  </body>
+</html>

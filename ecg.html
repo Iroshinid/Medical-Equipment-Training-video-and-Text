@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>ECG Machine Text Only</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+      body {
+        background-color: #f5f5ff;
+        color: #1a237e;
+        transition: background 0.4s, color 0.4s;
+        font-family: Arial, sans-serif;
+      }
+      .card {
+        width: 90%;
+        border-radius: 20px;
+        padding: 20px;
+        background: #fff;
+        position: relative;
+        border: 4px solid transparent;
+        background-clip: padding-box;
+        text-align: left;
+      }
+      .card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        padding: 4px;
+        background: linear-gradient(135deg, #42a5f5, #ab47bc);
+        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        z-index: -1;
+      }
+      h1, h4 { text-align: center; }
+      p { text-align: left; padding: 10px; margin: 0; }
+
+      /* Dark mode */
+      body.dark { background-color: #120024; color: #f3e5f5; }
+      body.dark .card { background: #1e1e2f; color: #f3e5f5; }
+      body.dark .card::before { background: linear-gradient(135deg, #5c6bc0, #ba68c8); }
+
+      /* Dark-mode toggle */
+      .switch {
+        position: fixed;
+        top: 15px;
+        right: 20px;
+        width: 60px; height: 34px;
+        z-index: 1000;
+      }
+      .switch input { display: none; }
+      .slider {
+        position: absolute;
+        inset: 0;
+        cursor: pointer;
+        background-color: #90caf9;
+        transition: 0.4s;
+        border-radius: 34px;
+      }
+      .slider:before {
+        content: "";
+        position: absolute;
+        height: 26px; width: 26px;
+        left: 4px; bottom: 4px;
+        background-color: white;
+        transition: 0.4s;
+        border-radius: 50%;
+      }
+      input:checked + .slider { background-color: #ba68c8; }
+      input:checked + .slider:before { transform: translateX(26px); }
+
+      /* Language dropdown wrapper + custom arrow */
+      .language-select-wrapper {
+        position: fixed;
+        top: 15px;
+        left: 20px;
+        z-index: 1000;
+        display: inline-block;
+      }
+      .language-select-wrapper::after {
+        content: "▼";
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        pointer-events: none;
+        color: #ab47bc;
+        font-size: 12px;
+      }
+      body.dark .language-select-wrapper::after { color: #ba68c8; }
+
+      /* Styled language dropdown */
+      .language-select {
+        padding: 8px 56px 8px 12px;
+        font-size: 14px;
+        font-weight: 600;
+        border-radius: 10px;
+        border: 2px solid transparent;
+        background-color: #fff;
+        color: #1a237e;
+        cursor: pointer;
+        outline: none;
+        appearance: none;
+        background-image: linear-gradient(#fff, #fff),
+                          linear-gradient(135deg, #42a5f5, #ab47bc);
+        background-origin: border-box;
+        background-clip: padding-box, border-box;
+      }
+      .language-select:hover {
+        background-image: linear-gradient(#f5f5ff, #f5f5ff),
+                          linear-gradient(135deg, #42a5f5, #ab47bc);
+      }
+      body.dark .language-select {
+        background-image: linear-gradient(#1e1e2f, #1e1e2f),
+                          linear-gradient(135deg, #5c6bc0, #ba68c8);
+        color: #f3e5f5;
+      }
+      body.dark .language-select:hover {
+        background-image: linear-gradient(#2a2a3f, #2a2a3f),
+                          linear-gradient(135deg, #5c6bc0, #ba68c8);
+      }
+
+      .lang { display: none; }
+
+      /* Normalize option colors (light mode) */
+      .language-select option {
+        background-color: #ffffff;
+        color: #1a237e;
+      }
+      .language-select option:hover,
+      .language-select option:checked {
+        background-color: #e8f0ff;
+        color: #1a237e;
+      }
+      body.dark .language-select option {
+        background-color: #1e1e2f;
+        color: #f3e5f5;
+      }
+      body.dark .language-select option:hover,
+      body.dark .language-select option:checked {
+        background-color: #2a2a3f;
+        color: #f3e5f5;
+      }
+      .language-select { color-scheme: light dark; }
+    </style>
+  </head>
+  <body class="dark">
+    <!-- Dark mode toggle -->
+    <label class="switch">
+      <input type="checkbox" id="modeToggle" checked>
+      <span class="slider"></span>
+    </label>
+
+    <!-- Language selector -->
+    <div class="language-select-wrapper">
+      <select id="languageSelect" class="language-select">
+        <option value="English">English</option>
+        <option value="Sinhala">Sinhala</option>
+        <option value="Tamil">Tamil</option>
+      </select>
+    </div>
+
+    <center>
+      <div class="card">
+        <h1>ECG Machine — Text Module</h1>
+        <h4>Operate</h4>
+<p>
+  <span class="lang English">Power on the ECG machine; confirm self‑test completes.</span>
+<span class="lang Sinhala">ECG machine Power on කරන්න; self‑test සම්පූර්ණවී ඇති බව තහවුරු කරන්න.</span>
+<span class="lang Tamil">ECG machine Power on செய்யவும்; self‑test முடிந்ததை உறுதிப்படுத்தவும்.</span><br><br>
+  <span class="lang English">Enter patient ID (if system requires) and select monitoring or 12‑lead mode.</span>
+<span class="lang Sinhala">පද්ධතිය අවශ්‍ය නම් patient ID ඇතුල් කර monitoring හෝ 12‑lead mode තෝරන්න.</span>
+<span class="lang Tamil">அமைப்பு கேட்டால் patient ID உள்ளிட்டு monitoring அல்லது 12‑lead mode ஐ தேர்ந்தெடுக்கவும்.</span><br><br>
+  <span class="lang English">Attach electrodes: RA (right arm), LA (left arm), RL (right leg), LL (left leg), and chest leads V1–V6.</span>
+<span class="lang Sinhala">Electrodes ඉලෙක්ට්‍රෝඩ අමුණන්න: RA (දකුණු අත), LA (වම් අත), RL (දකුණු පාදය), LL (වම් පාදය), සහ chest electrode V1–V6..</span>
+<span class="lang Tamil">Electrodes பொருத்தவும்: RA (வலது கை), LA (இடது கை), RL (வலது கால்), LL (இடது கால்), மற்றும் மார்பு V1–V6 leads.</span><br><br>
+  <span class="lang English">Ensure skin is clean, dry, and shaved if needed.</span>
+<span class="lang Sinhala">සම පිරිසිදු, වියලි, අවශ්‍ය නම් shave කර තිබේදැයි බලන්න.</span>
+<span class="lang Tamil">தோல் சுத்தமாகவும் வறண்டதாகவும், தேவையெனில் shave செய்யப்பட்டிருக்க வேண்டும்.</span><br><br>
+  <span class="lang English">Verify good electrode contact; check impedance indicators if available.</span>
+<span class="lang Sinhala">Electrode contact හොඳින් ඇති බව තහවුරු කරන්න; තිබේ නම් impedance indicators පරීක්ෂා කරන්න.</span>
+<span class="lang Tamil">Electrode contact நன்றாக உள்ளதா உறுதிப்படுத்தவும்; கிடைத்தால் impedance indicators ஐச் சரிபார்க்கவும்.</span><br><br>
+  <span class="lang English">Start recording or monitoring: press “Start/Acquire” for ECG trace.</span>
+<span class="lang Sinhala">Recording හෝ monitoring ආරම්භ කරන්න: ECG trace සඳහා “Start/Acquire” ඔබන්න.</span>
+<span class="lang Tamil">Recording அல்லது monitoring தொடங்கவும்: ECG trace க்காக “Start/Acquire” ஐ அழுத்தவும்.</span><br><br>
+  <span class="lang English">Print/save results per hospital protocol.</span>
+<span class="lang Sinhala">Hospital protocol අනුව ප්‍රතිඵල print/ save කරන්න.</span>
+<span class="lang Tamil">Hospital protocol படி முடிவுகளை print/ save செய்யவும்.</span><br><br>
+  <span class="lang English">Remove electrodes gently; clean the patient’s skin.</span>
+<span class="lang Sinhala">Electrodes මෘදු ලෙස ඉවත් කර රෝගියාගේ සම පිරිසිදු කරන්න.</span>
+<span class="lang Tamil">Electrodes ஐ மெதுவாக அகற்றி நோயாளியின் தோலை சுத்தம் செய்யவும்.</span>
+</p>
+<h4>Safety Checks (Daily)</h4>
+<p>
+  <span class="lang English">Confirm machine passes self‑test.</span>
+<span class="lang Sinhala">Machine self‑test සම්පූර්ණ/සමත් වී ඇති බව තහවුරු කරන්න.</span>
+<span class="lang Tamil">Machine self‑test வெற்றி பெற்றதா உறுதிப்படுத்தவும்.</span><br><br>
+  <span class="lang English">Battery ≥80% or connected to AC power.</span>
+<span class="lang Sinhala">Battery ≥80%ද, නැත්නම් AC power සම්බන්ධ කර තිබේදැයි බලන්න.</span>
+<span class="lang Tamil">Battery ≥80% அல்லது AC power இணைக்கப்பட்டிருப்பதை உறுதி செய்யவும்.</span><br><br>
+  <span class="lang English">Electrodes in sealed package, not expired.</span>
+<span class="lang Sinhala">Electrodes මුද්‍රිත පැකේජයක තිබේද, කල් ඉකුත් වී නැද්ද බලන්න.</span>
+<span class="lang Tamil">Electrodes சீல் செய்யப்பட்ட தொகுப்பில் உள்ளனவா, காலாவதி ஆகவில்லையா எனப் பார்க்கவும்.</span><br><br>
+  <span class="lang English">Lead wires and connectors intact, no fraying.</span>
+<span class="lang Sinhala">Lead wires සහ connectors සම්පූර්ණයි; ගැට ගැසී තිබේද බලන්න​බලන්න.</span>
+<span class="lang Tamil">Lead wires மற்றும் connectors முழுமையாக உள்ளனவா; கிழிவுகள் இல்லையா எனச் சரிபார்க்கவும்.</span><br><br>
+  <span class="lang English">Paper supply adequate for printing.</span>
+<span class="lang Sinhala">Print කිරීම සඳහා paper ප්‍රමාණය ප්‍රමාණවත්ද බලන්න.</span>
+<span class="lang Tamil">Print செய்ய paper போதுமானதா எனச் சரிபார்க்கவும்.</span><br><br>
+  <span class="lang English">After use: disinfect cables, patient‑contact surfaces, and restock electrodes.</span>
+<span class="lang Sinhala">භාවිතයෙන් පසු: cables සහ රෝගියා සම්බන්ධ වූ මතුපිටවල් disinfect කර electrodes නැවත තැබීමට සැලසුම් කරන්න.</span>
+<span class="lang Tamil">பயன்பாட்டிற்கு பின்: cables மற்றும் patient‑contact surfaces ஐ disinfect செய்து electrodes ஐ மீண்டும் நிரப்பவும்.</span>
+</p>
+<h4>Preventive Maintenance</h4>
+<p>
+  <span class="lang English">Weekly: inspect all leads, connectors, and test print quality.</span>
+<span class="lang Sinhala">සතිපතා: සියලු leads, connectors පරීක්ෂා කරන්න; print quality පරීක්ෂා කරන්න.</span>
+<span class="lang Tamil">வாராந்திரம்: அனைத்து leads, connectors பரிசோதித்து print quality ஐச் சோதிக்கவும்.</span><br><br>
+  <span class="lang English">Monthly: cycle battery fully; check calibration if required.</span>
+<span class="lang Sinhala">මාසිකව: battery සම්පූර්ණයෙන් cycle කරන්න; අවශ්‍ය නම් calibration පරීක්ෂා කරන්න.</span>
+<span class="lang Tamil">மாதாந்திரம்: battery முழுமையாக cycle செய்து, தேவையெனில் calibration ஐச் சரிபார்க்கவும்.</span><br><br>
+  <span class="lang English">Record all tests, consumables replaced, and faults in the logbook.</span>
+<span class="lang Sinhala">සියලු tests, consumables ප්‍රතිස්ථාපන සහ දෝෂ logbook එකේ ලේඛනය කරන්න.</span>
+<span class="lang Tamil">அனைத்து tests, consumables மாற்றங்கள் மற்றும் faults ஐ logbook இல் பதிவு செய்யவும்.</span>
+</p>
+<h4>Troubleshoot</h4>
+<p>
+  <span class="lang English">No power → check battery, AC connection.</span>
+<span class="lang Sinhala">Power නැත → battery සහ AC connection පරීක්ෂා කරන්න.</span>
+<span class="lang Tamil">Power இல்லை → battery மற்றும் AC connection ஐச் சரிபார்க்கவும்.</span><br><br>
+  <span class="lang English">No ECG trace → check electrodes, replace dried gel, ensure good skin prep.</span>
+<span class="lang Sinhala">ECG trace නැත → electrodes පරීක්ෂා කරන්න; gel වියළී ඇත්නම් electrodes මාරු කරන්න; skin prep හොඳින් කර ඇති බව බලන්න.</span>
+<span class="lang Tamil">ECG trace இல்லை → electrodes ஐச் சரிபார்க்கவும்; gel உலர்ந்திருந்தால் மாற்றவும்; skin prep சரியாக உள்ளதா உறுதி செய்யவும்.</span><br><br>
+  <span class="lang English">Excess noise → reattach leads, reduce patient movement, keep cables away from mains cords.</span>
+<span class="lang Sinhala">අතිරේක ශබ්දය → leads නැවත සවි කරන්න; රෝගියාගේ චලනය අඩු කරන්න; cables mains cords වලින් දුරෙහි තබන්න.</span>
+<span class="lang Tamil">அதிக சத்தம் → leads ஐ மீண்டும் பொருத்தவும்; நோயாளியின் இயக்கத்தை குறைக்கவும்; cables ஐ mains cords இலிருந்து விலக்கி வைத்திருக்கவும்.</span><br><br>
+  <span class="lang English">Paper jam/no print → reload correctly, check printer rollers.</span>
+<span class="lang Sinhala">Paper jam/ print නොවේ → නිවැරදිව reload කර printer rollers පරීක්ෂා කරන්න.</span>
+<span class="lang Tamil">Paper jam/ print இல்லை → சரியாக reload செய்து printer rollers ஐச் சரிபார்க்கவும்.</span><br><br>
+  <span class="lang English">Low battery alarm → replace battery or connect to AC.</span>
+<span class="lang Sinhala">Low battery alarm → battery මාරු කරන්න හෝ AC සම්බන්ධ කරන්න.</span>
+<span class="lang Tamil">Low battery alarm → battery ஐ மாற்றவும் அல்லது AC ஐ இணைக்கவும்.</span>
+</p>
+<h4>Quick Checklist</h4>
+<p>
+  <span class="lang English">Operate: Power on → Patient prep → Leads attached → Record/Monitor → Save/Print.</span>
+<span class="lang Sinhala">Operate: Power on → Patient prep → Leads attached → Record/Monitor → Save/Print.</span>
+<span class="lang Tamil">Operate: Power on → Patient prep → Leads attached → Record/Monitor → Save/Print.</span><br><br>
+  <span class="lang English">Safety: Self‑test, battery, electrodes, paper.</span>
+<span class="lang Sinhala">Safety: Self‑test, battery, electrodes, paper.</span>
+<span class="lang Tamil">Safety: Self‑test, battery, electrodes, paper.</span><br><br>
+  <span class="lang English">Maintenance: Weekly inspection, monthly battery cycle.</span>
+<span class="lang Sinhala">Maintenance: සතිපතා inspection, මාසික battery cycle.</span>
+<span class="lang Tamil">Maintenance: வாராந்திர inspection, மாதாந்திர battery cycle.</span><br><br>
+  <span class="lang English">Troubleshoot: Power, electrodes, noise, print, battery.</span>
+<span class="lang Sinhala">Troubleshoot: Power, electrodes, noise, print, battery.</span>
+<span class="lang Tamil">Troubleshoot: Power, electrodes, noise, print, battery.</span>
+</p>
+
+      </div>
+    </center>
+
+    <script>
+      // Dark mode toggle
+      const toggle = document.getElementById('modeToggle');
+      toggle.addEventListener('change', () => {
+        document.body.classList.toggle('dark', toggle.checked);
+      });
+
+      // Language selector
+      const languageSelect = document.getElementById('languageSelect');
+      const allLangs = () => document.querySelectorAll('.lang');
+      function updateLanguage() {
+        const selected = languageSelect.value;
+        allLangs().forEach(el => {
+          el.style.display = el.classList.contains(selected) ? 'inline' : 'none';
+        });
+      }
+      languageSelect.addEventListener('change', updateLanguage);
+      updateLanguage(); // show English by default
+    </script>
+  </body>
+</html>

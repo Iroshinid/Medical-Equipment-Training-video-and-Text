@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Defibrillator Text Only</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+      body {
+        background-color: #f5f5ff;
+        color: #1a237e;
+        transition: background 0.4s, color 0.4s;
+        font-family: Arial, sans-serif;
+      }
+      .card {
+        width: 90%;
+        border-radius: 20px;
+        padding: 20px;
+        background: #fff;
+        position: relative;
+        border: 4px solid transparent;
+        background-clip: padding-box;
+        text-align: left;
+      }
+      .card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        padding: 4px;
+        background: linear-gradient(135deg, #42a5f5, #ab47bc);
+        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        z-index: -1;
+      }
+      h1, h4 { text-align: center; }
+      p { text-align: left; padding: 10px; margin: 0; }
+
+      /* Dark mode */
+      body.dark { background-color: #120024; color: #f3e5f5; }
+      body.dark .card { background: #1e1e2f; color: #f3e5f5; }
+      body.dark .card::before { background: linear-gradient(135deg, #5c6bc0, #ba68c8); }
+
+      /* Dark-mode toggle */
+      .switch {
+        position: fixed;
+        top: 15px;
+        right: 20px;
+        width: 60px; height: 34px;
+        z-index: 1000;
+      }
+      .switch input { display: none; }
+      .slider {
+        position: absolute;
+        inset: 0;
+        cursor: pointer;
+        background-color: #90caf9;
+        transition: 0.4s;
+        border-radius: 34px;
+      }
+      .slider:before {
+        content: "";
+        position: absolute;
+        height: 26px; width: 26px;
+        left: 4px; bottom: 4px;
+        background-color: white;
+        transition: 0.4s;
+        border-radius: 50%;
+      }
+      input:checked + .slider { background-color: #ba68c8; }
+      input:checked + .slider:before { transform: translateX(26px); }
+
+      /* Language dropdown wrapper + custom arrow */
+      .language-select-wrapper {
+        position: fixed;
+        top: 15px;
+        left: 20px;
+        z-index: 1000;
+        display: inline-block;
+      }
+      .language-select-wrapper::after {
+        content: "▼";
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        pointer-events: none;
+        color: #ab47bc;
+        font-size: 12px;
+      }
+      body.dark .language-select-wrapper::after { color: #ba68c8; }
+
+      /* Styled language dropdown */
+      .language-select {
+        padding: 8px 56px 8px 12px;
+        font-size: 14px;
+        font-weight: 600;
+        border-radius: 10px;
+        border: 2px solid transparent;
+        background-color: #fff;
+        color: #1a237e;
+        cursor: pointer;
+        outline: none;
+        appearance: none;
+        background-image: linear-gradient(#fff, #fff),
+                          linear-gradient(135deg, #42a5f5, #ab47bc);
+        background-origin: border-box;
+        background-clip: padding-box, border-box;
+      }
+      .language-select:hover {
+        background-image: linear-gradient(#f5f5ff, #f5f5ff),
+                          linear-gradient(135deg, #42a5f5, #ab47bc);
+      }
+      body.dark .language-select {
+        background-image: linear-gradient(#1e1e2f, #1e1e2f),
+                          linear-gradient(135deg, #5c6bc0, #ba68c8);
+        color: #f3e5f5;
+      }
+      body.dark .language-select:hover {
+        background-image: linear-gradient(#2a2a3f, #2a2a3f),
+                          linear-gradient(135deg, #5c6bc0, #ba68c8);
+      }
+
+      .lang { display: none; }
+
+      /* Normalize option colors (light mode) */
+      .language-select option {
+        background-color: #ffffff;
+        color: #1a237e;
+      }
+      .language-select option:hover,
+      .language-select option:checked {
+        background-color: #e8f0ff;
+        color: #1a237e;
+      }
+      body.dark .language-select option {
+        background-color: #1e1e2f;
+        color: #f3e5f5;
+      }
+      body.dark .language-select option:hover,
+      body.dark .language-select option:checked {
+        background-color: #2a2a3f;
+        color: #f3e5f5;
+      }
+      .language-select { color-scheme: light dark; }
+    </style>
+  </head>
+  <body class="dark">
+    <!-- Dark mode toggle -->
+    <label class="switch">
+      <input type="checkbox" id="modeToggle" checked>
+      <span class="slider"></span>
+    </label>
+
+    <!-- Language selector -->
+    <div class="language-select-wrapper">
+      <select id="languageSelect" class="language-select">
+        <option value="English">English</option>
+        <option value="Sinhala">Sinhala</option>
+        <option value="Tamil">Tamil</option>
+      </select>
+    </div>
+
+    <center>
+      <div class="card">
+        <h1>Defibrillator — Text Module</h1>
+        <h4>Operate</h4>
+<p>
+  <span class="lang English">Power on; confirm self-test completes.</span>
+<span class="lang Sinhala">Power on කරන්න; self-test සම්පූර්ණවී ඇති බව තහවුරු කරන්න.</span>
+<span class="lang Tamil">Power on செய்யவும்; self-test முடிந்ததை உறுதிப்படுத்தவும்.</span><br><br>
+  <span class="lang English">Select mode: Manual (trained staff) or AED (guided).</span>
+<span class="lang Sinhala">Mode තෝරන්න: Manual (පුහුණු කාර්ය මණ්ඩලය සඳහා) හෝ AED (guided mode).</span>
+<span class="lang Tamil">Mode தேர்வு: Manual (பயிற்சி பெற்ற ஊழியர்கள்) அல்லது AED (guided).</span><br><br>
+  <span class="lang English">Place pads: right chest (below clavicle) and left side (mid-axillary).</span>
+<span class="lang Sinhala">Pads තැබීම: දකුණු පපුවේ (clavicle යට) සහ වම් පැත්තේ mid-axillary line.</span>
+<span class="lang Tamil">Pads வைக்கவும்: வலது மார்பு (clavicle கீழ்) மற்றும் இடது பக்கம் (mid-axillary line).</span><br><br>
+  <span class="lang English">Ensure skin is clean, dry.</span>
+<span class="lang Sinhala">සම පිරිසිදු සහ වියලි බව තහවුරු කරන්න.</span>
+<span class="lang Tamil">சருமம் சுத்தமாகவும் வறண்டதாகவும் இருப்பதை உறுதி செய்யவும்.</span><br><br>
+  <span class="lang English">Select energy (manual mode: 200 J biphasic or per protocol).</span>
+<span class="lang Sinhala">Energy තෝරන්න (Manual mode: 200 J biphasic හෝ hospital protocol අනුව).</span>
+<span class="lang Tamil">Energy தேர்வு: Manual mode இல் 200 J biphasic அல்லது hospital protocol படி.</span><br><br>
+  <span class="lang English">Press “Charge,” announce “Clear!” confirm no one touching patient.</span>
+<span class="lang Sinhala">“Charge” button ඔබන්න, “Clear!” කිසිවෙකු රෝගියා ස්පර්ශ නොකරන බව තහවුරු කරන්න.</span>
+<span class="lang Tamil">“Charge” அழுத்தவும், “Clear!” என்று அறிவிக்கவும், நோயாளியை யாரும் தொடாததை உறுதி செய்யவும்.</span><br><br>
+  <span class="lang English">Deliver shock: press both paddle buttons or unit button.</span>
+<span class="lang Sinhala">Shock ලබා දෙන්න: paddle buttons දෙකම හෝ unit button ඔබන්න.</span>
+<span class="lang Tamil">Shock வழங்கவும்: paddle buttons அல்லது unit button அழுத்தவும்.</span>
+</p>
+<h4>Safety Checks (Daily)</h4>
+<p>
+  <span class="lang English">Verify daily self-test passed.</span>
+<span class="lang Sinhala">දිනපතා self-test සම්පූර්ණ වී ඇති බව තහවුරු කරන්න.</span>
+<span class="lang Tamil">தினசரி self-test முடிந்ததை உறுதி செய்யவும்.</span><br><br>
+  <span class="lang English">Check battery ≥80%.</span>
+<span class="lang Sinhala">Battery ≥80% පරීක්ෂා කරන්න.</span>
+<span class="lang Tamil">Battery ≥80% சரிபார்க்கவும்.</span><br><br>
+  <span class="lang English">Inspect pads: intact package, not expired.</span>
+<span class="lang Sinhala">Pads intact වීම සහ කල් ඉකුත් වී නොමැති බව පරීක්ෂා කරන්න.</span>
+<span class="lang Tamil">Pads intact மற்றும் காலாவதி ஆகவில்லை என்பதை உறுதி செய்யவும்.</span><br><br>
+  <span class="lang English">Confirm paddles and cables undamaged.</span>
+<span class="lang Sinhala">Paddles සහ cables හානි වී නොමැති බව තහවුරු කරන්න.</span>
+<span class="lang Tamil">Paddles மற்றும் cables சேதமடையாமல் இருப்பதை உறுதி செய்யவும்.</span><br><br>
+  <span class="lang English">During shock: stand clear, avoid contact with surfaces.</span>
+<span class="lang Sinhala">Shock කම්පනය අතරතුර:  මතුපිට ස්පර්ශ වීමෙන් වළකින්න..</span>
+<span class="lang Tamil">Shock போது: தெளிவாக நிற்கவும், மேற்பரப்புகளுடன் தொடர்பைத் தவிர்க்கவும்.</span><br><br>
+  <span class="lang English">After use: clean paddles, connectors, restock pads.</span>
+<span class="lang Sinhala">භාවිතයෙන් පසු: paddles, connectors පිරිසිදු කර pads නැවත තබන්න.</span>
+<span class="lang Tamil">பயன்பாட்டிற்குப் பிறகு: paddles, connectors சுத்தம் செய்து pads மீண்டும் வைக்கவும்.</span>
+</p>
+<h4>Preventive Maintenance</h4>
+<p>
+  <span class="lang English">Weekly: run manual discharge test, inspect cables/paddles.</span>
+<span class="lang Sinhala">සතිපතා: manual discharge test ක්‍රියාත්මක කරන්න, cables/paddles පරීක්ෂා කරන්න.</span>
+<span class="lang Tamil">வாராந்திரம்: manual discharge test இயக்கி cables/paddles பரிசோதிக்கவும்.</span><br><br>
+  <span class="lang English">Monthly: cycle battery fully, check calibration if required.</span>
+<span class="lang Sinhala">මාසිකව: battery සම්පූර්ණයෙන් cycle කරන්න, අවශ්‍ය නම් calibration පරීක්ෂා කරන්න.</span>
+<span class="lang Tamil">மாதாந்திரம்: battery முழுமையாக cycle செய்து தேவையானால் calibration சரிபார்க்கவும்.</span><br><br>
+  <span class="lang English">Document all tests, battery changes, and faults in logbook.</span>
+<span class="lang Sinhala">සියලුම tests, battery වෙනස්කම් සහ දෝෂ logbook එකේ ලියන්න.</span>
+<span class="lang Tamil">அனைத்து tests, battery மாற்றங்கள் மற்றும் faults logbook இல் பதிவு செய்யவும்.</span>
+</p>
+<h4>Troubleshoot</h4>
+<p>
+  <span class="lang English">No power → check battery, reseat or connect AC.</span>
+<span class="lang Sinhala">Power නැත්නම් → battery පරීක්ෂා කරන්න, නැවත සවි කරන්න හෝ AC විදුලි සැපයුමට සම්බන්ධ කරන්න.</span>
+<span class="lang Tamil">Power இல்லையெனில் → battery சரிபார்க்கவும், மீண்டும் பொருத்தவும் அல்லது AC இணைக்கவும்.</span><br><br>
+  <span class="lang English">No ECG trace → reconnect electrodes, ensure skin contact.</span>
+<span class="lang Sinhala">ECG trace නැත්නම් → electrodes නැවත සම්බන්ධ කරන්න, සම touch හොඳින් තියෙනවාද බලන්න.</span>
+<span class="lang Tamil">ECG trace இல்லையெனில் → electrodes மீண்டும் இணைக்கவும், skin contact உறுதி செய்யவும்.</span><br><br>
+  <span class="lang English">Shock won’t deliver → confirm charge complete, safety interlock cleared.</span>
+<span class="lang Sinhala">Shock deliver නොවන්නේ නම් → Charge සම්පූර්ණවී ඇති බව සහ safety interlock remove වී ඇති බව බලන්න.</span>
+<span class="lang Tamil">Shock deliver ஆகவில்லை என்றால் → Charge முடிந்தது, safety interlock நீக்கப்பட்டது என்பதை உறுதி செய்யவும்.</span><br><br>
+  <span class="lang English">Low battery alarm → replace battery or connect AC.</span>
+<span class="lang Sinhala">Low battery alarm → battery මාරු කරන්න හෝ AC සම්බන්ධ කරන්න.</span>
+<span class="lang Tamil">Low battery alarm → battery மாற்றவும் அல்லது AC இணைக்கவும்.</span>
+</p>
+
+      </div>
+    </center>
+
+    <script>
+      // Dark mode toggle
+      const toggle = document.getElementById('modeToggle');
+      toggle.addEventListener('change', () => {
+        document.body.classList.toggle('dark', toggle.checked);
+      });
+
+      // Language selector
+      const languageSelect = document.getElementById('languageSelect');
+      const allLangs = () => document.querySelectorAll('.lang');
+      function updateLanguage() {
+        const selected = languageSelect.value;
+        allLangs().forEach(el => {
+          el.style.display = el.classList.contains(selected) ? 'inline' : 'none';
+        });
+      }
+      languageSelect.addEventListener('change', updateLanguage);
+      updateLanguage(); // show English by default
+    </script>
+  </body>
+</html>

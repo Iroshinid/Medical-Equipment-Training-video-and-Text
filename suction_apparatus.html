@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Suction Apparatus Text Only</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+      body {
+        background-color: #f5f5ff;
+        color: #1a237e;
+        transition: background 0.4s, color 0.4s;
+        font-family: Arial, sans-serif;
+      }
+      .card {
+        width: 90%;
+        border-radius: 20px;
+        padding: 20px;
+        background: #fff;
+        position: relative;
+        border: 4px solid transparent;
+        background-clip: padding-box;
+        text-align: left;
+      }
+      .card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        padding: 4px;
+        background: linear-gradient(135deg, #42a5f5, #ab47bc);
+        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        z-index: -1;
+      }
+      h1, h4 { text-align: center; }
+      p { text-align: left; padding: 10px; margin: 0; }
+
+      /* Dark mode */
+      body.dark { background-color: #120024; color: #f3e5f5; }
+      body.dark .card { background: #1e1e2f; color: #f3e5f5; }
+      body.dark .card::before { background: linear-gradient(135deg, #5c6bc0, #ba68c8); }
+
+      /* Dark-mode toggle */
+      .switch {
+        position: fixed;
+        top: 15px;
+        right: 20px;
+        width: 60px; height: 34px;
+        z-index: 1000;
+      }
+      .switch input { display: none; }
+      .slider {
+        position: absolute;
+        inset: 0;
+        cursor: pointer;
+        background-color: #90caf9;
+        transition: 0.4s;
+        border-radius: 34px;
+      }
+      .slider:before {
+        content: "";
+        position: absolute;
+        height: 26px; width: 26px;
+        left: 4px; bottom: 4px;
+        background-color: white;
+        transition: 0.4s;
+        border-radius: 50%;
+      }
+      input:checked + .slider { background-color: #ba68c8; }
+      input:checked + .slider:before { transform: translateX(26px); }
+
+      /* Language dropdown wrapper + custom arrow */
+      .language-select-wrapper {
+        position: fixed;
+        top: 15px;
+        left: 20px;
+        z-index: 1000;
+        display: inline-block;
+      }
+      .language-select-wrapper::after {
+        content: "▼";
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        pointer-events: none;
+        color: #ab47bc;
+        font-size: 12px;
+      }
+      body.dark .language-select-wrapper::after { color: #ba68c8; }
+
+      /* Styled language dropdown */
+      .language-select {
+        padding: 8px 56px 8px 12px;
+        font-size: 14px;
+        font-weight: 600;
+        border-radius: 10px;
+        border: 2px solid transparent;
+        background-color: #fff;
+        color: #1a237e;
+        cursor: pointer;
+        outline: none;
+        appearance: none;
+        background-image: linear-gradient(#fff, #fff),
+                          linear-gradient(135deg, #42a5f5, #ab47bc);
+        background-origin: border-box;
+        background-clip: padding-box, border-box;
+      }
+      .language-select:hover {
+        background-image: linear-gradient(#f5f5ff, #f5f5ff),
+                          linear-gradient(135deg, #42a5f5, #ab47bc);
+      }
+      body.dark .language-select {
+        background-image: linear-gradient(#1e1e2f, #1e1e2f),
+                          linear-gradient(135deg, #5c6bc0, #ba68c8);
+        color: #f3e5f5;
+      }
+      body.dark .language-select:hover {
+        background-image: linear-gradient(#2a2a3f, #2a2a3f),
+                          linear-gradient(135deg, #5c6bc0, #ba68c8);
+      }
+
+      .lang { display: none; }
+
+      /* Normalize option colors (light mode) */
+      .language-select option {
+        background-color: #ffffff;
+        color: #1a237e;
+      }
+      .language-select option:hover,
+      .language-select option:checked {
+        background-color: #e8f0ff;
+        color: #1a237e;
+      }
+      body.dark .language-select option {
+        background-color: #1e1e2f;
+        color: #f3e5f5;
+      }
+      body.dark .language-select option:hover,
+      body.dark .language-select option:checked {
+        background-color: #2a2a3f;
+        color: #f3e5f5;
+      }
+      .language-select { color-scheme: light dark; }
+    </style>
+  </head>
+  <body class="dark">
+    <!-- Dark mode toggle -->
+    <label class="switch">
+      <input type="checkbox" id="modeToggle" checked>
+      <span class="slider"></span>
+    </label>
+
+    <!-- Language selector -->
+    <div class="language-select-wrapper">
+      <select id="languageSelect" class="language-select">
+        <option value="English">English</option>
+        <option value="Sinhala">Sinhala</option>
+        <option value="Tamil">Tamil</option>
+      </select>
+    </div>
+
+    <center>
+      <div class="card">
+        <h1>Suction Apparatus — Text Module</h1>
+        <h4>Operate</h4>
+<p>
+  <span class="lang English">Pre‑Use Setup: Ensure device is connected to AC power or fully charged (for portable units). Assemble tubing, canister, and suction catheter. Fill water trap if applicable.</span>
+<span class="lang Sinhala">Pre‑Use Setup: Portable ඒකක සඳහා AC power සම්බන්ධ කර ඇතිද නැත්නම් සම්පූර්ණයෙන් charge වී ඇතිද තහවුරු කරන්න. Tubing, canister, හා suction catheter එකතු කරන්න. Water trap තිබේ නම් පුරවන්න.</span>
+<span class="lang Tamil">Pre‑Use Setup: Portable units க்கு AC power இணைக்கப்பட்டதா — அல்லது முழுமையாக charge செய்யப்பட்டதா — உறுதி செய்யவும். Tubing, canister, மற்றும் suction catheter ஐ ஒன்றிணைக்கவும். Water trap இருந்தால் நிரப்பவும்.</span><br><br>
+  <span class="lang English">Check Function: Block the patient end of the tubing and verify vacuum pressure reaches the prescribed level (e.g., −80 to −120 mmHg for adults).</span>
+<span class="lang Sinhala">Check Function: Tubing හි patient පැත්ත තාවකාලිකව අවහිර කර vacuum pressure නියමිත මට්ටමට ළඟා වන්නේද බලන්න (උදා. වැඩිහිටියන් සඳහා −80 සිට −120 mmHg දක්වා).</span>
+<span class="lang Tamil">Check Function: Tubing இன் patient பக்கத்தைத் தற்காலிகமாக occlude செய்து vacuum pressure பரிந்துரைக்கப்பட்ட அளவை அடைகிறதா பார்க்கவும் (எ.கா., பெரியவர்கள் −80 முதல் −120 mmHg வரை).</span><br><br>
+  <span class="lang English">Perform Suctioning: Wear gloves and PPE. Insert catheter without suction; apply suction only during withdrawal with gentle rotation. Limit each pass to ≤10 seconds to prevent hypoxia.</span>
+<span class="lang Sinhala">Suction කිරීම: Gloves සහ PPE ඇඳින්න. Catheter suction නොදී ඇතුල් කර, ඉවත් කිරීමේදී පමණක් (සැහැල්ලුවෙන් කරවමින්) suction යොදන්න. Hypoxia වලක්වා ගැනීමට එක් මඟ පසු කිරීම තත්පර 10 ට වඩා නොමැතිව තබන්න.</span>
+<span class="lang Tamil">Suction செய்தல்: Gloves மற்றும் PPE அணியவும். Catheter ஐ suction இன்றி நுழைத்து, வெளியே எடுக்கும் போது மட்டும் (மெதுவாக சுழற்றி) suction பயன்படுத்தவும். Hypoxia தவிர்க்க ஒவ்வொரு pass ஐ 10 விநாடிக்குள் முடிக்கவும்.</span><br><br>
+  <span class="lang English">After Use: Flush tubing with sterile water or saline. Empty and disinfect the canister according to infection control policy.</span>
+<span class="lang Sinhala">භාවිතයෙන් පසු: Tubing sterile water හෝ saline සමඟ flush කරන්න. Infection control policy අනුව canister හි අඩංගු ද්‍රව්‍ය හිස් කර disinfect කරන්න.</span>
+<span class="lang Tamil">பயன்பாட்டிற்கு பின்: Tubing ஐ sterile water அல்லது saline கொண்டு flush செய்யவும். Infection control policy படி canister ஐ காலி செய்து disinfect செய்யவும்.</span><br><br>
+  <span class="lang English">Extra: Use appropriate pressure for age group — Neonates: −40 to −60 mmHg; Pediatrics: −60 to −100 mmHg; Adults: −80 to −120 mmHg.</span>
+<span class="lang Sinhala">අමතර: වයස් කාණ්ඩයට ගැළපෙන pressure භාවිතා කරන්න — Neonates: −40 සිට −60 mmHg; Pediatrics: −60 සිට −100 mmHg; Adults: −80 සිට −120 mmHg.</span>
+<span class="lang Tamil">கூடுதல்: வயது குழுவிற்கு ஏற்ற pressure ஐ பயன்படுத்தவும் — Neonates: −40 முதல் −60 mmHg; Pediatrics: −60 முதல் −100 mmHg; Adults: −80 முதல் −120 mmHg.</span>
+</p>
+<h4>Safety Checks (Daily)</h4>
+<p>
+  <span class="lang English">Before use: Inspect tubing for cracks or discoloration.</span>
+<span class="lang Sinhala">භාවිතයට පෙර: Tubing හි කැඩීම්, පාට වෙනස් වීම් තිබේදැයි පරීක්ෂා කරන්න.</span>
+<span class="lang Tamil">பயன்பாட்டிற்கு முன்: Tubing இல் பிளவுகள் அல்லது நிறமாற்றம் உள்ளதா பாருங்கள்.</span><br><br>
+  <span class="lang English">Before use: Check canister for cleanliness and secure fit.</span>
+<span class="lang Sinhala">භාවිතයට පෙර: Canister පිරිසිදු ද, සහ හොඳින් fix කර ඇතිද බලන්න.</span>
+<span class="lang Tamil">பயன்பாட்டிற்கு முன்: Canister சுத்தமாகவும் உறுதியாக பொருத்தப்பட்டுள்ளதையும் உறுதி செய்யவும்.</span><br><br>
+  <span class="lang English">Before use: Verify vacuum level on gauge.</span>
+<span class="lang Sinhala">භාවිතයට පෙර: Gauge මත vacuum මට්ටම තහවුරු කරන්න.</span>
+<span class="lang Tamil">பயன்பாட்டிற்கு முன்: Gauge இல் vacuum நிலையை உறுதி செய்யவும்.</span><br><br>
+  <span class="lang English">After use: Dispose of single‑use catheters immediately.</span>
+<span class="lang Sinhala">භාවිතයෙන් පසු: Single‑use catheters කඩිනමින් ඉවත දමන්න.</span>
+<span class="lang Tamil">பயன்பாட்டிற்கு பின்: Single‑use catheters ஐ உடனடியாக கைவிடவும்.</span><br><br>
+  <span class="lang English">After use: Clean and disinfect all reusable parts.</span>
+<span class="lang Sinhala">භාවිතයෙන් පසු: නැවත භාවිතා කර න​ සියලු කොටස් පිරිසිදු කර disinfect කරන්න.</span>
+<span class="lang Tamil">பயன்பாட்டிற்கு பின்: மீண்டும் பயன்படுத்தக்கூடிய அனைத்து பகுதிகளையும் சுத்தம் செய்து disinfect செய்யவும்.</span>
+</p>
+<h4>Preventive Maintenance</h4>
+<p>
+  <span class="lang English">Daily: Empty and disinfect canister. Check power cable and plug.</span>
+<span class="lang Sinhala">දිනපතා: Canister හිස් කර disinfect කරන්න. Power cable හා plug පරීක්ෂා කරන්න.</span>
+<span class="lang Tamil">தினசரி: Canister ஐ காலி செய்து disinfect செய்யவும். Power cable மற்றும் plug ஐச் சரிபார்க்கவும்.</span><br><br>
+  <span class="lang English">Weekly: Inspect vacuum tubing and replace if worn.</span>
+<span class="lang Sinhala">සතිපතා: Vacuum tubing පරීක්ෂා කර ගෙවී ගියහොත් මාරු කරන්න.</span>
+<span class="lang Tamil">வாராந்திரம்: Vacuum tubing ஐ பரிசோதித்து kulippu இருந்தால் மாற்றவும்.</span><br><br>
+  <span class="lang English">Monthly: Test battery capacity (for portable units).</span>
+<span class="lang Sinhala">මාසිකව: (Portable units සඳහා) Battery capacity පරීක්ෂා කරන්න.</span>
+<span class="lang Tamil">மாதந்தோறும்: (Portable units க்கு) Battery capacity ஐச் சோதிக்கவும்.</span><br><br>
+  <span class="lang English">Annually (by Biomedical Engineering): Check and calibrate vacuum pressure gauge; service motor and replace filters if applicable.</span>
+<span class="lang Sinhala">වාර්ෂිකව (Biomedical Engineering විසින්): Vacuum pressure gauge පරීක්ෂා කර calibrate කරන්න; motor service කර අවශ්‍ය නම් filters මාරු කරන්න.</span>
+<span class="lang Tamil">ஆண்டு தோறும் (Biomedical Engineering): Vacuum pressure gauge ஐச் சரிபார்த்து calibrate செய்யவும்; motor ஐ service செய்து தேவையெனில் filters ஐ மாற்றவும்.</span>
+</p>
+<h4>Troubleshoot</h4>
+<p>
+  <span class="lang English">Low suction pressure → Blocked tubing or canister full → clear tubing, empty canister.</span>
+<span class="lang Sinhala">Low suction pressure → Tubing අවහිර වීම හෝ canister පිරී → tubing පිරිසිදු කර canister හිස් කරන්න.</span>
+<span class="lang Tamil">Low suction pressure → Tubing அடைப்பு அல்லது canister நிரம்பியுள்ளது → tubing ஐ சுத்தப்படுத்தி canister ஐ காலி செய்யவும்.</span><br><br>
+  <span class="lang English">No power → Power cord unplugged or battery depleted → reconnect or recharge.</span>
+<span class="lang Sinhala">Power නැත → Power cord විසන්ධි වී ඇති හෝ battery බැසීම​ → නැවත සම්බන්ධ කරන්න හෝ recharge කරන්න.</span>
+<span class="lang Tamil">Power இல்லை → Power cord துண்டிக்கப்பட்டது அல்லது battery காலியாகியுள்ளது → மீண்டும் இணைக்கவும் அல்லது recharge செய்யவும்.</span><br><br>
+  <span class="lang English">Excessive noise or vibration → Motor wear or loose components → stop device, call Biomedical Engineering.</span>
+<span class="lang Sinhala">අතිරේක ශබ්දය/කාම්පනය → Motor මෝටර් ගෙවී යාම හෝ ලිහිල් parts → උපකරණය නවත්වා Biomedical Engineering අමතන්න.</span>
+<span class="lang Tamil">அதிக சத்தம்/இடையுறுக்கு → Motor wear அல்லது parts தளர்வு → சாதனத்தை நிறுத்தி Biomedical Engineering ஒழுங்கமைப்பை அழைக்கவும்.</span><br><br>
+  <span class="lang English">Persistent odor → Inadequate cleaning → disinfect thoroughly, replace tubing if needed.</span>
+<span class="lang Sinhala">දිගටම දුගඳ​ දැනේ නම් → හොදින් පිරිසිදු කිරීම නොවී ඇත → සම්පූර්ණයෙන් disinfect කර අවශ්‍ය නම් tubing මාරු කරන්න.</span>
+<span class="lang Tamil">மீண்டும் மீண்டும் துர்நாற்றம் → போதுமான சுத்தம் இல்லை → முழுமையாக disinfect செய்து தேவையெனில் tubing ஐ மாற்றவும்.</span>
+</p>
+<h4>Quick Checklist</h4>
+<p>
+  <span class="lang English">Operate: Power/connect → Assemble tubing → Check vacuum → Suction safely → Flush & clean.</span>
+<span class="lang Sinhala">Operate: Power/සම්බන්ධ → Tubing එකලස් කරන්න → Vacuum පරීක්ෂා → ආරක්ෂිත suction → Flush & clean.</span>
+<span class="lang Tamil">Operate: Power/இணை → Tubing ஒன்றிணை → Vacuum சரிபார் → பாதுகாப்பான suction → Flush & clean.</span><br><br>
+  <span class="lang English">Safety: PPE, correct pressure, monitor patient, avoid prolonged suction.</span>
+<span class="lang Sinhala">Safety: PPE, නිවැරදි pressure, රෝගියා නිරීක්ෂණය, දිගු suction වලක්වන්න.</span>
+<span class="lang Tamil">Safety: PPE, சரியான pressure, நோயாளி கண்காணிப்பு, நீண்ட suction தவிர்க்கவும்.</span><br><br>
+  <span class="lang English">Maintenance: Daily clean, weekly inspect tubing, monthly battery test, annual calibration.</span>
+<span class="lang Sinhala">Maintenance: දෛනික පිරිසිදු, සතිපතා tubing පරීක්ෂා, මාසික battery test, වාර්ෂික calibration.</span>
+<span class="lang Tamil">Maintenance: தினசரி சுத்தம், வாராந்திர tubing பரிசோதனை, மாதாந்திர battery test, ஆண்டு calibration.</span><br><br>
+  <span class="lang English">Troubleshoot: Clear tubing, recharge battery, service motor, disinfect fully.</span>
+<span class="lang Sinhala">Troubleshoot: Tubing නිසි කර, battery recharge කර, motor service කර, සම්පූර්ණයෙන් disinfect කරන්න.</span>
+<span class="lang Tamil">Troubleshoot: Tubing சுத்தம், battery recharge, motor service, முழுமையாக disinfect.</span>
+</p>
+
+      </div>
+    </center>
+
+    <script>
+      // Dark mode toggle
+      const toggle = document.getElementById('modeToggle');
+      toggle.addEventListener('change', () => {
+        document.body.classList.toggle('dark', toggle.checked);
+      });
+
+      // Language selector
+      const languageSelect = document.getElementById('languageSelect');
+      const allLangs = () => document.querySelectorAll('.lang');
+      function updateLanguage() {
+        const selected = languageSelect.value;
+        allLangs().forEach(el => {
+          el.style.display = el.classList.contains(selected) ? 'inline' : 'none';
+        });
+      }
+      languageSelect.addEventListener('change', updateLanguage);
+      updateLanguage(); // show English by default
+    </script>
+  </body>
+</html>
